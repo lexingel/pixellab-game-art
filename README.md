@@ -32,4 +32,16 @@ notes and the privacy note (sharing results with the authors is off unless you t
 - Remembers several named art styles per project; matches new art to art you approved.
 - Picks cheaper AI models for simple steps; works on PixelLab's free trial and every plan.
 
+## Your data: consent first, lessons shared weekly
+
+- **Nothing is sent unless you say yes.** Setup asks once; the answer is off by default. You choose
+  `stats` (numbers and settings only) or `prompts` (plus your prompt text), and can preview, switch
+  off or delete everything you sent at any time (`/pga-feedback`).
+- Never sent: your PixelLab token, images, file paths, uploads or job ids.
+- **Every week, what the shared results teach is folded back into the skill for all users** - better
+  prompts, safer settings, new pitfall notes. Each weekly [CHANGELOG](CHANGELOG.md) entry lists what changed
+  because of shared data and how many shared jobs it came from. Raw records are never published.
+
+Details: the "Privacy" section in each folder's README.
+
 The skill is MIT-licensed ([LICENSE](LICENSE)). Assets you make fall under [PixelLab's terms](https://pixellab.ai/termsofservice). Changes: [CHANGELOG.md](CHANGELOG.md).

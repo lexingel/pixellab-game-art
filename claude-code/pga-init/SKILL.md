@@ -40,7 +40,7 @@ Let's set up PixelLab for this project - one reply; "ok" keeps a [default].
    C) both: "C: art/hero.png, but top-down"
 3. Engine [none - just PNGs]: godot · unity · unreal · gamemaker · defold · phaser · rpg maker · other
 4. Output folder [pixellab_out]: e.g. assets/sprites
-5. Share results to improve the skill? [off] · off · stats (numbers only) · prompts (+ your prompt text) - /pga-feedback explains
+5. Share results to improve the skill? [off] · off · stats (numbers only) · prompts (+ your prompt text). The lessons go back into the skill for everyone in a weekly update - /pga-feedback explains
 
 Example reply:  1 ok, yes · 2 B: cozy, mid, top-down · 3 unity · 4 assets/art · 5 off
 ```

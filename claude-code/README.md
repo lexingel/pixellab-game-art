@@ -203,6 +203,11 @@ what would go out. `PIXELLAB_SKILL_NO_TELEMETRY=1` blocks sending on a machine w
 Data goes to a Cloudflare Worker run by the skill's authors, is used only to improve the skill's
 prompts, settings and pitfall notes, and is not sold or shared.
 
+**What happens with shared data - weekly, for everyone.** Once a week the authors review what was
+shared and fold the lessons (prompts that work, settings that fail, new pitfalls) back into the skill as
+an update for all users. Each weekly update's CHANGELOG entry says what changed because of shared
+results and how many shared jobs it was based on. Raw records are never published - only the lessons.
+
 ## Licence and PixelLab's terms
 
 The skill files are free to share. Everything you generate falls under PixelLab's terms of service

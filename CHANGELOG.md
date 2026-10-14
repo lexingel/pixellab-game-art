@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1 - 2026-10-14
+- Data sharing stays consent-only (off by default). New: shared results are reviewed weekly and their
+  lessons released to all users as a skill update; each weekly entry here says what changed because of
+  shared data and how many shared jobs it came from. Raw records are never published.
+
 ## 1.2.0 - 2026-10-14
 Built for people who have never used PixelLab.
 - "Let your AI assistant set it up": SETUP_FOR_AI.md walks any assistant through installing, connecting
