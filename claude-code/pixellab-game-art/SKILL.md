@@ -52,6 +52,7 @@ preview first) · `--ref <image>` · `--n 3` (variations) · `--size WxH` · sty
 | `/pga-feedback` | your choice about sharing results to improve the skill: status, on/off, preview, forget | Haiku |
 | `/pga-history` | past generations: what, when, cost, verdict, files; spend per command and day (free) | Haiku |
 | `/pga-reroll` | re-run a past result with a new seed or one wording change | Sonnet |
+| `/pga-update` | gets the weekly skill update and merges it into your install, keeping your own edits (free) | Haiku |
 | `/pga-tech` | explains why the skill does something, or walks through how it does a task step by step (free) | Sonnet |
 <!-- /pga:commands -->
 

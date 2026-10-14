@@ -52,6 +52,7 @@ preview first) · `--ref <image>` · `--n 3` (variations) · `--size WxH` · sty
 | `pga-feedback` | your choice about sharing results to improve the skill: status, on/off, preview, forget | `pga-feedback preview` |
 | `pga-history` | past generations: what, when, cost, verdict, files; spend per command and day (free) | `pga-history 20 --cost` |
 | `pga-reroll` | re-run a past result with a new seed or one wording change | `pga-reroll last no cape` |
+| `pga-update` | gets the weekly skill update and merges it into your install, keeping your own edits (free) | `pga-update` |
 | `pga-tech` | explains why the skill does something, or walks through how it does a task step by step (free) | `pga-tech explain pga-anim` |
 <!-- /pga:commands -->
 

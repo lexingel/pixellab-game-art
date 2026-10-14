@@ -32,6 +32,12 @@ notes and the privacy note (sharing results with the authors is off unless you t
 - Remembers several named art styles per project; matches new art to art you approved.
 - Picks cheaper AI models for simple steps; works on PixelLab's free trial and every plan.
 
+## Updates
+
+The skill is updated weekly. Already installed? Tell your assistant **`pga-update`** - it downloads
+the new version and merges it into your install, keeping any skill file you changed (`pga-update undo`
+goes back). Your styles and generated art are never touched.
+
 ## Your data: consent first, lessons shared weekly
 
 - **Nothing is sent unless you say yes.** Setup asks once; the answer is off by default. You choose

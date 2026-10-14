@@ -115,6 +115,7 @@ pga-tech explain pga-anim
 | `pga-feedback` | your choice about sharing results to improve the skill: status, on/off, preview, forget | `pga-feedback preview` |
 | `pga-history` | past generations: what, when, cost, verdict, files; spend per command and day (free) | `pga-history 20 --cost` |
 | `pga-reroll` | re-run a past result with a new seed or one wording change | `pga-reroll last no cape` |
+| `pga-update` | gets the weekly skill update and merges it into your install, keeping your own edits (free) | `pga-update` |
 | `pga-tech` | explains why the skill does something, or walks through how it does a task step by step (free) | `pga-tech explain pga-anim` |
 <!-- /pga:commands -->
 
@@ -174,6 +175,16 @@ per-frame milliseconds); single images are plain PNGs. For crisp pixels in any e
   each frame's time in the Animation clip from the JSON durations.
 - **GameMaker:** Create Sprite → *Import Strip Image*, frame count and size from the JSON.
 - **Defold, RPG Maker, others:** use the numbered frames (`0.png`, `1.png`, …) in the output folder, or the sheet + JSON.
+
+## Updates (weekly)
+
+The skill gets an update every week - the lessons from shared results, fixes and new commands. Your
+assistant mentions it at most once a week when one is out. To get it: `pga-update` (or
+`python <skill>/scripts/update.py`). It backs up your install, installs the new version with the same
+options as before and keeps any skill file you edited (if the update changed the same file, your
+assistant merges the two). `pga-update undo` goes back. Your `pixellab.json`, styles and generated
+files are never touched. No internet / download blocked: download the repository ZIP and run
+`pga-update from <the zip>`.
 
 ## Privacy: sharing results (opt-in, off by default)
 

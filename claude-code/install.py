@@ -9,6 +9,8 @@ Run it from the unzipped folder (on macOS/Linux: python3 install.py). Running it
 older install. Python 3.8+, no packages needed to run it. Your pixellab.json and anything you
 generated are never touched.
 """
+import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -100,8 +102,22 @@ def version_of(folder):
         return None
 
 
+def write_manifest(target, version):
+    """What was installed (file hashes + options) - scripts/update.py uses it to keep files you edit."""
+    files = {}
+    for root, dirs, names in os.walk(target):
+        dirs[:] = [d for d in dirs if d != '__pycache__']
+        for n in names:
+            p = os.path.join(root, n)
+            with open(p, 'rb') as f:
+                files[os.path.relpath(p, target).replace(os.sep, '/')] = hashlib.sha256(f.read()).hexdigest()
+    m = {'version': version, 'pkg': 'claude-code', 'args': [a for a in args if a == '--project'], 'cwd': os.getcwd(), 'files': files}
+    with open(os.path.join(target, '.install.json'), 'w', encoding='utf-8') as f:
+        json.dump(m, f, indent=1)
+
+
 os.makedirs(dest, exist_ok=True)
-old_v = version_of(os.path.join(dest, 'pixellab-game-art'))
+old_v =version_of(os.path.join(dest, 'pixellab-game-art'))
 new_v = version_of(os.path.join(here, 'pixellab-game-art'))
 for d in folders:
     target = os.path.join(dest, d)
@@ -112,6 +128,7 @@ for d in os.listdir(dest):   # commands an older version had and this one droppe
     if d.startswith('pga-') and d not in folders and os.path.isfile(os.path.join(dest, d, 'SKILL.md')):
         shutil.rmtree(os.path.join(dest, d))
         print('Removed old command %s (not in this version)' % d)
+write_manifest(os.path.join(dest, 'pixellab-game-art'), new_v)
 was = '' if old_v is None else (', was %s' % old_v if old_v != new_v else ', same version refreshed')
 print('Installed %d folders (version %s%s) into %s' % (len(folders), new_v or '?', was, dest))
 py = python_name()

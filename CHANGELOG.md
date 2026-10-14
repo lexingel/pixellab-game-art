@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0 - 2026-10-14
+- `/pga-update`: gets the weekly update and merges it into your install - backs up the old one, installs
+  the new one with the same options (and your models.json picks), keeps skill files you edited and has
+  your assistant merge any file both you and the update changed. `/pga-update check`, `/pga-update undo`,
+  `/pga-update from <zip>` for offline installs.
+- The setup check says once a week when a newer version is out (`PIXELLAB_SKILL_NO_UPDATE_CHECK=1` turns it off).
+- Installers record what they installed (`.install.json`) so updates can tell your edits from the old version.
+
 ## 1.2.1 - 2026-10-14
 - Data sharing stays consent-only (off by default). New: shared results are reviewed weekly and their
   lessons released to all users as a skill update; each weekly entry here says what changed because of

@@ -15,6 +15,7 @@ Run it from the unzipped folder (on macOS/Linux: python3 install.py). Running it
 older install. Python 3.8+, no packages needed to run it. Your pixellab.json and anything you
 generated are never touched.
 """
+import hashlib
 import json
 import os
 import re
@@ -229,7 +230,23 @@ old_v, new_v = version_of(target), version_of(source)
 if os.path.exists(target):
     shutil.rmtree(target)
 shutil.copytree(source, target, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
-was = '' if old_v is None else (' (was %s)' % old_v if old_v != new_v else ' (same version, refreshed)')
+files = {}   # what was installed - scripts/update.py uses it to keep files you edit
+for root, dirs, names in os.walk(target):
+    dirs[:] = [d for d in dirs if d != '__pycache__']
+    for n in names:
+        p = os.path.join(root, n)
+        with open(p, 'rb') as f:
+            files[os.path.relpath(p, target).replace(os.sep, '/')] = hashlib.sha256(f.read()).hexdigest()
+iargs = ['--project'] if '--project' in args else []
+if '--to' in args:
+    iargs += ['--to', dest]
+if agent:
+    iargs += ['--agent', agent]
+with open(os.path.join(here, 'models.json'), encoding='utf-8') as f:
+    picks = {agent: json.load(f)['agents'].get(agent)} if agent else {}
+with open(os.path.join(target, '.install.json'), 'w', encoding='utf-8') as f:
+    json.dump({'version': new_v, 'pkg': 'any-agent', 'args': iargs, 'cwd': os.getcwd(), 'models': picks, 'files': files}, f, indent=1)
+was ='' if old_v is None else (' (was %s)' % old_v if old_v != new_v else ' (same version, refreshed)')
 print('Installed pixellab-game-art %s into %s%s' % (new_v or '', dest, was))
 py = python_name()
 print('Run the skill\'s scripts with: %s   (e.g. %s %s)' % (py, py, os.path.join(target, 'scripts', 'check_setup.py')))

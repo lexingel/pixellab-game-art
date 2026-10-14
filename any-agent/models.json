@@ -26,7 +26,8 @@
     "pga-doctor": "light",
     "pga-feedback": "light",
     "pga-analyze": "standard",
-    "pga-tech": "standard"
+    "pga-tech": "standard",
+    "pga-update": "light"
   },
   "agents": {
     "claude": {
@@ -88,7 +89,8 @@
     "pga-doctor": "Check that everything the pixellab-game-art skill needs works - PixelLab connection and token, plan tier and balance, Python and packages, the project profile, the output folder, sharing - and print the exact fix for anything that doesn't. Free.",
     "pga-feedback": "The user's choice about sharing generation outcomes (opt-in) with the skill's authors: see the status, switch it on (stats / prompts) or off, preview exactly what would be sent, send now, or delete everything this install sent.",
     "pga-analyze": "Analyse a user's own pixel art (PNG, GIF or a folder) - pixel scale, density, palette, colour count, outline, shading tones, dithering, light, and for GIFs frame count, timing, holds and motion - then turn it into style rules saved in pixellab.json so every /pga-* command replicates that style.",
-    "pga-tech": "Explain the technical reason behind anything the pixellab-game-art skill or its commands do - a tool choice, a parameter, a script, a pipeline step, a cost, or a failure that just happened. Brief and direct."
+    "pga-tech": "Explain the technical reason behind anything the pixellab-game-art skill or its commands do - a tool choice, a parameter, a script, a pipeline step, a cost, or a failure that just happened. Brief and direct.",
+    "pga-update": "Get the latest version of the pixellab-game-art skill (updated weekly with the lessons from shared results) and merge it into this install, keeping files the user changed; check for one, or undo the last update."
   },
   "main_only": [
     "pga-init",

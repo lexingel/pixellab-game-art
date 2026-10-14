@@ -30,6 +30,8 @@ Skip for `/pga-prompt` and `/pga-help`. Remember the result for the session.
    isn't found). Missing Python → https://www.python.org/downloads/. Missing packages → print
    `pip install pillow numpy scipy` for the user to run and carry on with what works without them
    (generation and download do; QA/cleanup scripts don't). Never install anything yourself.
+   If it prints an `update` line (checked at most once a week), add "update X is out - `/pga-update`" to
+   the setup line below; don't update unasked.
 3. **Tier** - read it from `get_balance`'s `subscription:` line (trial/none or credits-only = Tier 0);
    if it can't be read, use `pixellab.json` → `tier` (asked at setup); neither → Tier 1. If the two
    disagree, trust `get_balance` and update `tier` in the profile. Keep it for the session: it sets

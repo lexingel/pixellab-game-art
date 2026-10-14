@@ -12,7 +12,7 @@ for _s in (sys.stdout, sys.stderr):   # Windows consoles: never crash on non-ASC
     except Exception:
         pass
 
-STDLIB = ('pga-help', 'pga-prompt', 'pga-style', 'pga-feedback', 'pga-tech', 'pga-doctor', 'pga-history')   # no local packages at all
+STDLIB = ('pga-help', 'pga-update', 'pga-prompt', 'pga-style', 'pga-feedback', 'pga-tech', 'pga-doctor', 'pga-history')   # no local packages at all
 IMAGE = ('pga-init', 'pga-analyze', 'pga-reroll', 'pga-start', 'pga-char', 'pga-bg', 'pga-scene', 'pga-building', 'pga-icon', 'pga-vfx', 'pga-batch')
 NEEDS = {c: [] for c in STDLIB}   # what each command uses locally besides the PixelLab MCP server (downloads/uploads are stdlib)
 NEEDS.update({c: ['pillow', 'numpy'] for c in IMAGE})   # pga-init / pga-analyze run analyze_style.py
@@ -37,6 +37,11 @@ if pkgs:
     missing.append('%s -m pip install %s' % (py, ' '.join(pkgs)))
     missing.append('(on macOS/Linux run the scripts with python3; if pip says "externally-managed-environment", '
                    'see install.py --pip for the options)')
+try:   # weekly: is a newer skill version out? (one line, only when there is one)
+    import update
+    update.check(weekly=True)
+except Exception:
+    pass
 if missing:
     print('\nTO FIX:')
     for m in missing:
