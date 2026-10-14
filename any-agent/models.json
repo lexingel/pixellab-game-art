@@ -1,0 +1,98 @@
+{
+  "_readme": [
+    "Which model each pga-* task runs on, when installed as subagents (python install.py --agent <name>).",
+    "light = text only, scripted steps (help, prompt, style, feedback); standard = writes prompts and judges images;",
+    "strong = frame-by-frame animation judgement (pga-anim). An empty value means: use the agent's current model.",
+    "Put your own cheaper/stronger model names here (they differ per account and change often), then re-run the installer.",
+    "Examples - codex model: a mini/spark codex model; gemini: a flash model for light, a pro model for standard;",
+    "opencode: provider/model (e.g. anthropic/claude-haiku-...); copilot: the model's display name."
+  ],
+  "tiers": {
+    "pga-help": "light",
+    "pga-init": "standard",
+    "pga-style": "light",
+    "pga-prompt": "light",
+    "pga-char": "standard",
+    "pga-bg": "standard",
+    "pga-scene": "standard",
+    "pga-building": "standard",
+    "pga-icon": "standard",
+    "pga-anim": "strong",
+    "pga-vfx": "standard",
+    "pga-batch": "standard",
+    "pga-history": "light",
+    "pga-reroll": "standard",
+    "pga-start": "standard",
+    "pga-doctor": "light",
+    "pga-feedback": "light",
+    "pga-analyze": "standard",
+    "pga-tech": "standard"
+  },
+  "agents": {
+    "claude": {
+      "light": "haiku",
+      "standard": "sonnet",
+      "strong": "inherit"
+    },
+    "codex": {
+      "light": {
+        "model": "",
+        "effort": "low"
+      },
+      "standard": {
+        "model": "",
+        "effort": "medium"
+      },
+      "strong": {
+        "model": "",
+        "effort": "high"
+      }
+    },
+    "gemini": {
+      "light": "",
+      "standard": "",
+      "strong": "inherit"
+    },
+    "cursor": {
+      "light": "fast",
+      "standard": "inherit",
+      "strong": "inherit"
+    },
+    "opencode": {
+      "light": "",
+      "standard": "",
+      "strong": ""
+    },
+    "copilot": {
+      "light": "",
+      "standard": "",
+      "strong": ""
+    }
+  },
+  "descriptions": {
+    "pga-help": "List the pixellab-game-art slash commands with one example each, and how to start.",
+    "pga-init": "Set up PixelLab for a project: asks the user's PixelLab plan tier, then their art style (pick parameters or send a reference image), shows the resulting setup, and saves it as a named art style in pixellab.json.",
+    "pga-style": "Manage named art styles saved in pixellab.json: list them, switch the active one, show, rename, delete, or create a new one with the same setup conversation as /pga-init.",
+    "pga-prompt": "Improve any PixelLab prompt with the pixellab-game-art house style and show the better prompt, tool, size and cost - without generating anything. Detects the asset type.",
+    "pga-char": "Make a pixel-art character sprite (hero, monster, boss, NPC, portrait) with PixelLab in the pixellab-game-art house style - improves the description first, then generates, QA-checks and logs.",
+    "pga-bg": "Make a side-view pixel-art battle background with PixelLab in the pixellab-game-art house style - improves the scene description first (open ground, landmarks, palette, no characters), then generates, QA-checks and logs.",
+    "pga-scene": "Make a hub/menu backdrop, story/cutscene picture or region map in pixel art with PixelLab in the pixellab-game-art house style - improves the description first, then generates, QA-checks and logs.",
+    "pga-building": "Make a pixel-art building or prop (and upgrade tiers) with PixelLab in the pixellab-game-art house style - improves the description first (single building, side elevation, night light, no people), then generates, QA-checks and logs.",
+    "pga-icon": "Make pixel-art item, skill, status or relic icons (and rare/epic variants) with PixelLab in the pixellab-game-art house style - improves the description first, generates at 64 px for a clean downscale, QA-checks and logs.",
+    "pga-anim": "Animate a sprite's attack, skill or signature move in the pixellab-game-art house style - padded canvas, two painted key poses (wind-up, hit), a 10-frame animate_image between them, automatic flash checks, frame picking and an engine-ready sheet.",
+    "pga-vfx": "Turn a short effect idea into a painted, outlined pixel-art VFX clip with PixelLab's free vfx_workbench in the pixellab-game-art house style (strike / wave / eruption templates, lit puffs, hold-fast-hold timing), exported with per-frame durations.",
+    "pga-batch": "Make many pixel-art assets in one go with PixelLab (icons, monsters, props, backgrounds…): improves every prompt, shows one cost table, submits all jobs together, downloads, QA-checks and logs them, and returns one review sheet.",
+    "pga-history": "Show past generations from the job log - newest first, with cost, verdict and files - and what was spent (per command, tool and day). Free.",
+    "pga-reroll": "Re-run a past generation - the last one, or one named by file, name or words - with a new seed or the user's wording change, same tool and settings otherwise.",
+    "pga-start": "A guided first project for someone new to PixelLab: explains what happens at each step, suggests three starter assets that fit the saved art style, makes them one by one with a cheap draft first, and ends with what was spent and what to try next.",
+    "pga-doctor": "Check that everything the pixellab-game-art skill needs works - PixelLab connection and token, plan tier and balance, Python and packages, the project profile, the output folder, sharing - and print the exact fix for anything that doesn't. Free.",
+    "pga-feedback": "The user's choice about sharing generation outcomes (opt-in) with the skill's authors: see the status, switch it on (stats / prompts) or off, preview exactly what would be sent, send now, or delete everything this install sent.",
+    "pga-analyze": "Analyse a user's own pixel art (PNG, GIF or a folder) - pixel scale, density, palette, colour count, outline, shading tones, dithering, light, and for GIFs frame count, timing, holds and motion - then turn it into style rules saved in pixellab.json so every /pga-* command replicates that style.",
+    "pga-tech": "Explain the technical reason behind anything the pixellab-game-art skill or its commands do - a tool choice, a parameter, a script, a pipeline step, a cost, or a failure that just happened. Brief and direct."
+  },
+  "main_only": [
+    "pga-init",
+    "pga-style",
+    "pga-analyze"
+  ]
+}

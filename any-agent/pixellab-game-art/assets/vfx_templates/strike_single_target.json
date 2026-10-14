@@ -1,0 +1,92 @@
+{
+ "recipe": {
+  "canvas": {
+   "w": 112,
+   "h": 112
+  },
+  "frames": 12,
+  "fps": 12,
+  "loop": false,
+  "origin": [
+   56,
+   62
+  ],
+  "ramps": {
+   "main": [
+    "#0a140e",
+    "#1f3a26",
+    "#2f5f3a",
+    "#4f8f45",
+    "#a8c860",
+    "#f0e8a0"
+   ]
+  },
+  "outline": {
+   "mode": "dark"
+  },
+  "tones": 5,
+  "detail": 0.1,
+  "shading": "lit",
+  "layers": [
+   {
+    "id": "swing",
+    "type": "arc",
+    "profile": "slash",
+    "x": 52,
+    "y": 52,
+    "radius": 30,
+    "start": -130,
+    "sweep": 180,
+    "thickness": 7,
+    "life": [
+     0.0,
+     0.42
+    ],
+    "z": "front"
+   },
+   {
+    "id": "billow",
+    "type": "puffs",
+    "mode": "burst",
+    "x": 56,
+    "y": 62,
+    "radius": 24,
+    "count": 6,
+    "throw": 0.55,
+    "rise": 0.5,
+    "thin": 0.45,
+    "lump": 0.4,
+    "billow": 1.0,
+    "highlight": 0.65,
+    "life": [
+     0.18,
+     1.0
+    ],
+    "z": "back"
+   },
+   {
+    "id": "motes",
+    "type": "particles",
+    "mode": "rise",
+    "x": 56,
+    "y": 66,
+    "radius": 18,
+    "count": 12,
+    "speed": 40,
+    "size": [
+     2,
+     3
+    ],
+    "shape": "dot",
+    "lifespan": 0.7,
+    "fade_out": 0.4,
+    "life": [
+     0.35,
+     1.0
+    ],
+    "z": "front",
+    "outline": true
+   }
+  ]
+ }
+}

@@ -1,0 +1,183 @@
+{
+ "recipe": {
+  "canvas": {
+   "w": 360,
+   "h": 140
+  },
+  "frames": 14,
+  "fps": 12,
+  "loop": false,
+  "origin": [
+   40,
+   72
+  ],
+  "ramps": {
+   "main": [
+    "#2a0a08",
+    "#6e1409",
+    "#b3260e",
+    "#e8561a",
+    "#f8a531",
+    "#ffe08a"
+   ]
+  },
+  "outline": {
+   "mode": "dark"
+  },
+  "tones": 5,
+  "detail": 0.1,
+  "shading": "lit",
+  "mirror": "x",
+  "layers": [
+   {
+    "id": "swing",
+    "type": "arc",
+    "profile": "slash",
+    "x": 40,
+    "y": 70,
+    "radius": 34,
+    "start": -150,
+    "sweep": 210,
+    "thickness": 9,
+    "life": [
+     0.0,
+     0.3
+    ],
+    "z": "front"
+   },
+   {
+    "id": "stream",
+    "type": "shape",
+    "closed": false,
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      70,
+      -6
+     ],
+     [
+      150,
+      2
+     ],
+     [
+      230,
+      -4
+     ]
+    ],
+    "x": 60,
+    "y": 72,
+    "smooth": 1,
+    "fill": "cartoon",
+    "width": 16,
+    "taper": 0.3,
+    "spacing": 0.9,
+    "drift": 60,
+    "reveal": {
+     "keys": [
+      [
+       0,
+       0
+      ],
+      [
+       0.45,
+       1
+      ]
+     ],
+     "ease": "out"
+    },
+    "dissolve": {
+     "keys": [
+      [
+       0,
+       0
+      ],
+      [
+       0.55,
+       0
+      ],
+      [
+       1,
+       1
+      ]
+     ]
+    },
+    "life": [
+     0.14,
+     0.8
+    ],
+    "z": "back"
+   },
+   {
+    "id": "cloud",
+    "type": "puffs",
+    "mode": "burst",
+    "x": 290,
+    "y": 70,
+    "radius": 36,
+    "count": 9,
+    "throw": 0.6,
+    "rise": 0.3,
+    "thin": 0.5,
+    "lump": 0.4,
+    "billow": 1.0,
+    "highlight": 0.65,
+    "life": [
+     0.32,
+     1.0
+    ],
+    "z": "back"
+   },
+   {
+    "id": "midcloud",
+    "type": "puffs",
+    "mode": "burst",
+    "x": 190,
+    "y": 72,
+    "radius": 22,
+    "count": 6,
+    "throw": 0.5,
+    "rise": 0.3,
+    "thin": 0.5,
+    "lump": 0.4,
+    "billow": 1.0,
+    "highlight": 0.65,
+    "life": [
+     0.26,
+     0.9
+    ],
+    "z": "back"
+   },
+   {
+    "id": "embers",
+    "type": "particles",
+    "mode": "burst",
+    "x": 220,
+    "y": 70,
+    "line": 180,
+    "line_angle": 0,
+    "count": 34,
+    "speed": 40,
+    "direction": -80,
+    "spread": 160,
+    "gravity": 40,
+    "size": [
+     2,
+     4
+    ],
+    "shape": "dot",
+    "lifespan": 0.8,
+    "fade_out": 0.3,
+    "life": [
+     0.55,
+     1.0
+    ],
+    "z": "front",
+    "outline": true
+   }
+  ]
+ },
+ "fit_canvas": true
+}

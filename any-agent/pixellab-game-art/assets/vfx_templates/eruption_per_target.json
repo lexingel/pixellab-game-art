@@ -1,0 +1,137 @@
+{
+ "recipe": {
+  "canvas": {
+   "w": 100,
+   "h": 136
+  },
+  "frames": 12,
+  "fps": 12,
+  "loop": false,
+  "origin": [
+   50,
+   124
+  ],
+  "camera": {
+   "tilt": 0.15
+  },
+  "ramps": {
+   "main": [
+    "#2a0a08",
+    "#6e1409",
+    "#b3260e",
+    "#e8561a",
+    "#f8a531",
+    "#ffe08a"
+   ]
+  },
+  "outline": {
+   "mode": "dark"
+  },
+  "tones": 5,
+  "detail": 0.1,
+  "shading": "lit",
+  "layers": [
+   {
+    "id": "crack",
+    "type": "ring",
+    "plane": "ground",
+    "x": 50,
+    "y": 124,
+    "radius": {
+     "from": 6,
+     "to": 34
+    },
+    "width": 2,
+    "soft": 1,
+    "life": [
+     0.0,
+     0.32
+    ],
+    "z": "back"
+   },
+   {
+    "id": "flame",
+    "type": "flame",
+    "plane": "upright",
+    "x": 50,
+    "y": 124,
+    "width": 26,
+    "height": {
+     "keys": [
+      [
+       0,
+       6
+      ],
+      [
+       0.25,
+       70
+      ],
+      [
+       0.6,
+       56
+      ],
+      [
+       1,
+       10
+      ]
+     ]
+    },
+    "tongues": 3,
+    "spread": 1.0,
+    "taper": 0.6,
+    "curl": 0.4,
+    "flicker": 0.5,
+    "cycles": 2,
+    "life": [
+     0.06,
+     0.72
+    ],
+    "z": "back"
+   },
+   {
+    "id": "billow",
+    "type": "puffs",
+    "mode": "burst",
+    "x": 50,
+    "y": 70,
+    "radius": 20,
+    "count": 6,
+    "throw": 0.4,
+    "rise": 0.9,
+    "thin": 0.5,
+    "lump": 0.4,
+    "billow": 1.0,
+    "highlight": 0.65,
+    "life": [
+     0.32,
+     1.0
+    ],
+    "z": "back"
+   },
+   {
+    "id": "embers",
+    "type": "particles",
+    "mode": "rise",
+    "x": 50,
+    "y": 116,
+    "radius": 16,
+    "count": 16,
+    "speed": 80,
+    "wobble": 3,
+    "size": [
+     2,
+     3
+    ],
+    "shape": "dot",
+    "lifespan": 0.6,
+    "fade_out": 0.4,
+    "life": [
+     0.25,
+     1.0
+    ],
+    "z": "front",
+    "outline": true
+   }
+  ]
+ }
+}
