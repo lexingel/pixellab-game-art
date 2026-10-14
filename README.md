@@ -32,4 +32,4 @@ notes and the privacy note (sharing results with the authors is off unless you t
 - Remembers several named art styles per project; matches new art to art you approved.
 - Picks cheaper AI models for simple steps; works on PixelLab's free trial and every plan.
 
-Assets you make fall under [PixelLab's terms](https://pixellab.ai/termsofservice). Changes: [CHANGELOG.md](CHANGELOG.md).
+The skill is MIT-licensed ([LICENSE](LICENSE)). Assets you make fall under [PixelLab's terms](https://pixellab.ai/termsofservice). Changes: [CHANGELOG.md](CHANGELOG.md).
