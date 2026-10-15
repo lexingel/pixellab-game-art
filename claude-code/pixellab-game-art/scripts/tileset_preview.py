@@ -4,7 +4,8 @@ wrong corners and a chain that doesn't match show up before the tiles go into a 
 Each sheet needs its metadata next to it as <sheet>.json - `fetch.py <tileset_id> <sheet.png> --tileset` saves both.
 Several tilesets = a chain in order (sea>beach, then beach>grass made with the beach base tile id):
 the map gets one more terrain level per tileset, and each border uses the tileset for its two levels.
-Also writes <out>_tiles.png: every tile of each sheet cut by its bounding_box, with its corners.
+Also writes <out>_tiles.png: every tile of each sheet cut by its bounding_box, with its corners -
+look at the diagonal tiles 0110 / 1001 there; a random map rarely uses them.
 
   python tileset_preview.py map.png sea_beach.png beach_grass.png
 """

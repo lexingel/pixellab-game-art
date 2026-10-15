@@ -44,7 +44,10 @@ characters (they'd repeat on every tile).
 **Download + QA:** `python R/scripts/fetch.py <tileset_id> <out>/<lower>_<upper>.png --tileset --log …`
 (saves the sheet and its `.json` corners), then
 `python R/scripts/tileset_preview.py <out>/map.png <sheet1.png> <sheet2.png> …` (chain order) and
-look at `map.png` once: no seams, no banding, the shared terrain looks the same on both sides.
+look at `map.png` once (no seams, no banding, the shared terrain looks the same on both sides) and
+at `map_tiles.png`: the two diagonal tiles `0110` / `1001` are the weak ones (random maps rarely use
+them) - a broken or thin bank there → re-run that set with another `boundary_seed` or
+`connect_diagonals: true`.
 
 **Engine:** godot → read the MCP resource `pixellab://docs/godot/wang-tilesets` (PixelLab's
 converter to a TileMapLayer terrain set; paint with the Rect tool) and run it for the user. Any

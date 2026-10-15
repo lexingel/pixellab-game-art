@@ -5,44 +5,62 @@ sprites, backgrounds, buildings, icons, attack animations and effects - with cle
 of every job shown up front, and plain-language results. Built for people who have never used
 PixelLab before; deep enough to keep using after.
 
+## What it makes
+
+All of these were made with this skill and PixelLab - no hand-drawing.
+
+| | |
+|---|---|
+| ![Attack animation](examples/attack_animation.gif) | ![Effects](examples/effects.gif) |
+| **Attack animation** - wind-up, shot, recovery, made from one sprite. `/pga-anim knight.png rifle shot` | **Spell effects** - painted VFX clips with game-ready timing. `/pga-vfx frost cast` |
+| ![Icons](examples/icons_with_tiers.png) | ![Tileset](examples/tileset_chained.png) |
+| **Item icons + rare/epic tiers.** `/pga-icon steel sword --tiers` | **Terrain that autotiles** - sea, beach and grass from two chained tilesets (left: a test map, right: the sheets). `/pga-tiles sea > beach > grass` |
+| ![8 directions](examples/eight_directions.gif) | ![Normal map](examples/normal_map_lighting.gif) |
+| **8 directions** for top-down games, one attack per facing. `/pga-anim hero.png laser shot --dirs 8` | **Normal maps** - the sprite, its map, and a game light moving around it. `/pga-normal cleric.png` |
+
+## Start here (no experience needed)
+
+**What you need**
+- A Windows or Mac computer.
+- An **AI assistant** that can work with files on your computer. The easiest is the
+  [Claude desktop app](https://claude.ai/download) (its **Code** tab; needs a paid Claude plan).
+  Others work too - see "Pick your version" below.
+- A **PixelLab** account - [pixellab.ai](https://pixellab.ai), free to start. PixelLab is the service that draws
+  the art; it counts work in **generations** (a small sprite is ~5, a big picture ~25).
+
+**Steps**
+1. On this page click the green **Code** button → **Download ZIP**. Unzip it (Windows: right-click →
+   *Extract All…*; Mac: double-click). You get a folder called `pixellab-game-art-main`.
+2. Open the Claude desktop app → **Code** tab → start a new session and pick that folder.
+3. Send this message: **Set up the PixelLab skill for me - follow SETUP_FOR_AI.md.**
+4. The assistant does the setup. It asks you for three small things only:
+   - install Python if you don't have it (it gives you the link);
+   - copy your PixelLab **token** (a private key, like a password) from https://api.pixellab.ai/mcp;
+   - run **one** command it gives you, with your token pasted into it. Never paste the token into the chat.
+5. Start a new session, this time in your game's folder (any folder is fine).
+6. Type **`/pga-start`**. It makes three first pieces of art with you, explaining each step and its cost
+   before it runs.
+
+Something not working? Type **`/pga-doctor`** - it checks everything and tells you the fix in plain words.
+
 ## Pick your version
 
 | You use | Folder |
 |---|---|
-| **Claude Code** | [`claude-code/`](claude-code/) - slash commands (`/pga-start`, `/pga-char`, …) |
+| **Claude Code** (desktop app or terminal) | [`claude-code/`](claude-code/) - slash commands (`/pga-start`, `/pga-char`, …) |
 | **Codex, Gemini CLI, Cursor, GitHub Copilot, OpenCode** or another agent | [`any-agent/`](any-agent/) - the same skill in the open Agent Skills format |
 
-## Easiest start (about 5 minutes)
+Using another assistant? Do steps 1, 3-6 above, but open it inside the folder first:
 
-**1. Download it.** On this page click the green **Code** button → **Download ZIP**. Then unzip it:
-Windows - right-click the ZIP in your Downloads → *Extract All…*; Mac - double-click it. You get a
-folder called `pixellab-game-art-main`.
-
-**2. Open your AI assistant inside that folder.** The assistant has to be "in" the folder so it can
-read the setup instructions that came with it:
-
-| You use | Do this |
+| You use | Open it in the folder |
 |---|---|
-| **Claude desktop app** (Code tab) | Start a new session and choose the `pixellab-game-art-main` folder as the folder to work in. |
 | **Claude Code** in a terminal | Open a terminal in the folder (below), type `claude`, press Enter. |
 | **Codex CLI** / **Gemini CLI** / **OpenCode** | Open a terminal in the folder (below), type `codex` / `gemini` / `opencode`, press Enter. |
 | **Cursor** / **VS Code** (Copilot) | *File → Open Folder…* → pick the folder, then open the chat (agent) panel. |
 
 *Open a terminal in a folder:* **Windows** - open the folder in File Explorer, click the address bar, type
-`cmd`, press Enter. **Mac** - right-click the folder in Finder → *New Terminal at Folder*.
-
-**3. Copy this sentence into the assistant's chat and send it:**
-
-> Set up the PixelLab skill for me - follow SETUP_FOR_AI.md.
-
-The assistant reads the instructions file and installs everything itself. It only asks you for three
-things: install Python if it's missing, make a free PixelLab account at https://pixellab.ai and copy
-your token, and run **one** command it gives you with that token (paste the token into that command
-yourself - never into the chat). Then it tells you to restart the assistant.
-
-**4. Make your first art.** Restart the assistant in your game's folder (any folder works) and type
-`/pga-init` (pick your art style), then `/pga-start` - a guided first project that explains every step.
-On assistants other than Claude Code, type them without the slash: `pga-init`, `pga-start`.
+`cmd`, press Enter. **Mac** - right-click the folder in Finder → *New Terminal at Folder*. Outside
+Claude Code, type the commands without the slash: `pga-start`, `pga-doctor`.
 
 Each folder's README has the manual setup, every command, costs and waits, a glossary, engine import
 notes and the privacy note (sharing results with the authors is off unless you turn it on).
@@ -54,6 +72,13 @@ notes and the privacy note (sharing results with the authors is off unless you t
 - Checks results automatically before you see them; explains problems in plain words.
 - Remembers several named art styles per project; matches new art to art you approved.
 - Picks cheaper AI models for simple steps; works on PixelLab's free trial and every plan.
+
+## Keeping up with PixelLab
+
+When PixelLab adds a feature to its tools, the skill is tested against it and updated - the
+[CHANGELOG](CHANGELOG.md) has a "PixelLab updates" part in those entries saying what changed at
+PixelLab and what the skill does with it. Latest (PixelLab 0.4.130, October 2026): Tileset Pro
+(`/pga-tiles`), normal maps (`/pga-normal`), target colour palettes for Create Image Pro.
 
 ## Updates
 

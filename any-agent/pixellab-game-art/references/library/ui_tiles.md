@@ -77,6 +77,10 @@ transition: sparse grass tufts in sand · transition_size 0.25 · boundary_ampli
 - Sidescroller: the MCP/API tool has no pro mode yet (2026-10-15) - only the website.
 - Hex / iso / oblique: `create_tiles_pro(tile_feature="tileset")` makes a connectable 16-tile
   corner set (32-tile coastline for hex); `get_tiles_pro` returns each tile's placement bits.
+- Check the diagonal tiles (`0110`, `1001` in `tileset_preview.py`'s tiles sheet): in the tested
+  beach > grass set, `1001` came out as a thin broken bank while the test map looked fine (random
+  maps rarely place diagonals). Re-run with another `boundary_seed`, or `connect_diagonals: true`
+  if the game wants the two upper corners joined.
 - Place tiles by `corners` and cut them by `bounding_box`. The `wang_N` name and
   `original_position` are not sheet positions (using them gives horizontal banding).
 

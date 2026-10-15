@@ -1,18 +1,42 @@
 # Changelog
 
 ## 1.4.0 - 2026-10-15
-For PixelLab's 0.4.130 update (Tileset Pro, target palettes, VFX and normal maps in MCP/API).
-- `/pga-tiles`: terrain tilesets that autotile - top-down **Tileset Pro** (`mode: "pro"`, 16/32/64 px,
-  15 gens at ≤32 px) chained across terrains (`sea > beach > grass`, base tile ids), platformer sets,
-  hex/iso/oblique transitions (`create_tiles_pro` `tile_feature: "tileset"`). Downloads sheet + corner
-  metadata (`fetch.py --tileset`), paints a test map (new `tileset_preview.py`), Godot via PixelLab's
-  terrain converter. Tested: a chained pro pair, clean seams.
-- `/pga-normal`: normal maps for sprites and animations (0.5 each) so an engine can light them. New
-  `normal_map.py` packs frames into the GIF the tool reads (a PNG strip is read as one image), splits
-  the returned strip into `<frame>_n.png`, and lights the result from 3 sides for QA. Tested: one call
-  on a clip with big pose changes bands the later frames - split clips at pose changes.
-- Create Image Pro's target palette (`palette` hex list: every pixel lands on it) noted in the API guide;
-  costs table gains tilesets and normal maps (measured). Engine notes for tilesets and normal maps.
+
+**Skill**
+- `/pga-tiles` (new): terrain tilesets that autotile - top-down Tileset Pro chained across terrains
+  (`sea > beach > grass`), platformer sets, hex/iso/oblique transitions. Downloads the sheet and its
+  corner data (`fetch.py --tileset`), paints a test map (new `tileset_preview.py`), sets it up in
+  Godot with PixelLab's terrain converter.
+- `/pga-normal` (new): normal maps so an engine can light sprites and animations. New `normal_map.py`
+  packs frames into the GIF the tool reads, cuts the result into `<frame>_n.png` and lights it from
+  three sides to check it.
+- Engine notes for tilesets and normal maps (Godot, Unity, Phaser, Unreal); costs table gains both.
+- Repo page: example art from every kind of command, a "Start here" for people new to AI assistants
+  and PixelLab, and a "Keeping up with PixelLab" note.
+
+**PixelLab updates (0.4.130)** - what PixelLab changed and what the skill does with it
+- *Tileset Pro* (top-down): `create_topdown_tileset(mode="pro")`, 16/32/64 px, 15 generations at
+  ≤32 px, 25 above; new border controls (roundness, meandering edge, bank slope, joined diagonals);
+  connects to other sets through base tile ids. → `/pga-tiles` uses it by default.
+- *Tileset Pro* (sidescroller): website only so far - not in the MCP tools or the API. → `/pga-tiles`
+  uses the standard platformer tool until it is.
+- *Target palette* for Create Image Pro: `palette` (hex list) - every pixel of the result is one of
+  those colours. → noted in the API guide; more tools are getting it soon, per PixelLab.
+- *VFX* in the MCP tools (`vfx_workbench`) - `/pga-vfx` already used it. No REST endpoint yet.
+- *Normal maps* in the Creator, MCP and API (`create_normal_map`, 0.5 generation). → `/pga-normal`.
+
+**What we learned** (tested 2026-10-15, 31.5 generations)
+- Tileset Pro at 32 px costs exactly 15. A second set chained with the first set's *upper* base tile
+  id and the same words for the shared terrain matched it - no seam between beach and beach.
+- `step_slope 1` gives a soft earthy bank; 0 is a cliff edge.
+- Check the two diagonal tiles (`0110`, `1001`): one came out as a thin broken bank while the test map
+  looked fine, because random maps rarely use diagonals. Re-run with another `boundary_seed`.
+- Tiles are placed by their corners and cut by `bounding_box`; the `wang_N` name is not a position.
+- Normal maps: 0.5 per call, whether it's one sprite or 11 frames. The tool reads an animation from
+  a GIF; a PNG strip counts as one image (and is refused over 1024 px).
+- One call plans the shapes on the first frame: when the pose changes a lot (an attack's crouch),
+  the later frames get horizontal bands. The same frames sent on their own came out clean - split
+  clips where the pose changes.
 
 ## 1.3.2 - 2026-10-15
 - Kick recipe for a cartoon reference (convert, pad, 3 short clips) and the double-kick pitfall in `references/animation.md`.
