@@ -122,6 +122,8 @@ pga-tech explain pga-anim
 | `pga-icon` | item / skill / status icons (+ rare/epic) | `pga-icon rusty iron helmet --tiers` |
 | `pga-anim` | attack / skill animation: wind-up → hit | `pga-anim knight.png overhead axe chop` |
 | `pga-vfx` | painted effect clip (free) | `pga-vfx ice spear hits one enemy` |
+| `pga-tiles` | terrain tilesets that autotile: top-down Pro sets chained across terrains, platformer, hex/iso | `pga-tiles sea > beach > grass` |
+| `pga-normal` | normal maps so your engine can light sprites and animations (0.5 each) | `pga-normal art/knight.png` |
 | `pga-batch` | many assets in one go, one review sheet | `pga-batch icons: helmet, boots, ring, amulet` |
 | `pga-doctor` | checks the PixelLab connection, plan, Python, packages and project; prints the fix (free) | `pga-doctor` |
 | `pga-feedback` | your choice about sharing results to improve the skill: status, on/off, preview, forget | `pga-feedback preview` |
@@ -187,6 +189,11 @@ per-frame milliseconds); single images are plain PNGs. For crisp pixels in any e
   each frame's time in the Animation clip from the JSON durations.
 - **GameMaker:** Create Sprite → *Import Strip Image*, frame count and size from the JSON.
 - **Defold, RPG Maker, others:** use the numbered frames (`0.png`, `1.png`, …) in the output folder, or the sheet + JSON.
+- **Tilesets** (`pga-tiles`): a sheet PNG + a `.json` with each tile's corners (NW/NE/SW/SE) and box -
+  autotile by corners. Godot: your assistant can turn them into a TileMapLayer terrain set (paint with the Rect tool).
+- **Normal maps** (`pga-normal`): `<frame>_n.png` next to each sprite/frame. Godot: a CanvasTexture
+  (sprite = Diffuse, map = Normal) + a 2D light; Unity URP: Secondary Texture `_NormalMap`; Phaser:
+  `load.image(key, [png, n.png])` + the Light2D pipeline; Unreal: say "for Unreal" (DirectX maps).
 
 ## Updates (weekly)
 

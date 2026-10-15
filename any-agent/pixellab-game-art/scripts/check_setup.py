@@ -13,7 +13,7 @@ for _s in (sys.stdout, sys.stderr):   # Windows consoles: never crash on non-ASC
         pass
 
 STDLIB = ('pga-help', 'pga-update', 'pga-prompt', 'pga-style', 'pga-feedback', 'pga-tech', 'pga-doctor', 'pga-history')   # no local packages at all
-IMAGE = ('pga-init', 'pga-analyze', 'pga-reroll', 'pga-start', 'pga-char', 'pga-bg', 'pga-scene', 'pga-building', 'pga-icon', 'pga-vfx', 'pga-batch')
+IMAGE = ('pga-init', 'pga-analyze', 'pga-reroll', 'pga-start', 'pga-char', 'pga-bg', 'pga-scene', 'pga-building', 'pga-icon', 'pga-vfx', 'pga-batch', 'pga-tiles', 'pga-normal')
 NEEDS = {c: [] for c in STDLIB}   # what each command uses locally besides the PixelLab MCP server (downloads/uploads are stdlib)
 NEEDS.update({c: ['pillow', 'numpy'] for c in IMAGE})   # pga-init / pga-analyze run analyze_style.py
 NEEDS['pga-anim'] = ['pillow', 'numpy', 'scipy']

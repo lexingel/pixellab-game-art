@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.4.0 - 2026-10-15
+For PixelLab's 0.4.130 update (Tileset Pro, target palettes, VFX and normal maps in MCP/API).
+- `/pga-tiles`: terrain tilesets that autotile - top-down **Tileset Pro** (`mode: "pro"`, 16/32/64 px,
+  15 gens at ≤32 px) chained across terrains (`sea > beach > grass`, base tile ids), platformer sets,
+  hex/iso/oblique transitions (`create_tiles_pro` `tile_feature: "tileset"`). Downloads sheet + corner
+  metadata (`fetch.py --tileset`), paints a test map (new `tileset_preview.py`), Godot via PixelLab's
+  terrain converter. Tested: a chained pro pair, clean seams.
+- `/pga-normal`: normal maps for sprites and animations (0.5 each) so an engine can light them. New
+  `normal_map.py` packs frames into the GIF the tool reads (a PNG strip is read as one image), splits
+  the returned strip into `<frame>_n.png`, and lights the result from 3 sides for QA. Tested: one call
+  on a clip with big pose changes bands the later frames - split clips at pose changes.
+- Create Image Pro's target palette (`palette` hex list: every pixel lands on it) noted in the API guide;
+  costs table gains tilesets and normal maps (measured). Engine notes for tilesets and normal maps.
+
 ## 1.3.2 - 2026-10-15
 - Kick recipe for a cartoon reference (convert, pad, 3 short clips) and the double-kick pitfall in `references/animation.md`.
 

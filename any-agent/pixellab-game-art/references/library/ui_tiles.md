@@ -49,3 +49,34 @@ the near part of a worn flagstone dungeon floor: large cracked stone slabs in wa
 - Beach sand came back streaky. The re-run asked for `flat … even texture, no streaks` at
   `init_image_strength` 40.
 - Inpainted floors came back with grids and boxes. Ask for `empty floor, no items, no boxes, no frames, no lines`.
+
+## Terrain tilesets (autotiling) - `/pga-tiles`
+
+Tested 2026-10-15 (PixelLab 0.4.130, "Tileset Pro"): a chained pro pair at 32 px, 15 generations
+each, both clean on a painted test map (`tileset_preview.py`).
+
+```
+lower: shallow clear sea water with small ripples · upper: warm sandy beach
+transition: wet sand with a thin line of white foam · transition_size 0.25 · boundary_amplitude 0.15
+```
+```
+lower: warm sandy beach (lower_base_tile_id = the first set's UPPER base tile id) · upper: lush green grass meadow
+transition: sparse grass tufts in sand · transition_size 0.25 · boundary_amplitude 0.15 · step_slope 1
+```
+- `mode: "pro"` is the new model (16/32/64 px; 15 gens ≤32 px, 25 above). `mode: "standard"` (1-4)
+  is the draft. Pro takes `roundness`, `boundary_amplitude` + `boundary_seed`, `step_slope`,
+  `connect_diagonals`, `raggedness`; not `shape_style` (rejected with pro).
+- `step_slope 1` at transition 0.25 gave a soft earthy bank under the grass; 0 = a cliff edge.
+- The base tile ids come back with the submit, before the set is drawn. The chained set was
+  submitted after the first finished (the tested order).
+- The beach in set 2 matched set 1 with the same words + the base tile id - copy the shared
+  terrain's description exactly.
+- 0.5 / 1.0 transitions make 25-tile cliff sheets: the wall fills the cell below the edge, so
+  corner autotiling (and `tileset_preview.py`) doesn't cover them - use PixelLab's Godot doc
+  (`pixellab://docs/godot/wang-tilesets`, "Transition (cliff) tilesets").
+- Sidescroller: the MCP/API tool has no pro mode yet (2026-10-15) - only the website.
+- Hex / iso / oblique: `create_tiles_pro(tile_feature="tileset")` makes a connectable 16-tile
+  corner set (32-tile coastline for hex); `get_tiles_pro` returns each tile's placement bits.
+- Place tiles by `corners` and cut them by `bounding_box`. The `wang_N` name and
+  `original_position` are not sheet positions (using them gives horizontal banding).
+

@@ -3,8 +3,9 @@
 One job:
   python fetch.py <job_id> <out.png>                        # a single image
   python fetch.py <job_id> <out_dir> --frames 7             # an animation: <out_dir>/0.png .. 6.png
+  python fetch.py <tileset_id> <out.png> --tileset          # a top-down tileset: the sheet + <out>.json metadata
 Many jobs at once (a batch - polled together, so total wait = the slowest job):
-  python fetch.py --jobs jobs.txt --out <dir>               # lines: "<name> <job_id> [frames]"
+  python fetch.py --jobs jobs.txt --out <dir>               # lines: "<name> <job_id> [frames|tileset]"
 Logging (one JSON line per finished job, for re-rolls and cost reports - see cost_report.py):
   --log pixellab_out/log.jsonl --meta-file meta.json        # meta.json = {"cmd":"pga-char","tool":"create_image_pixflux","prompt":"...","params":{...},"cost":1}
   --log pixellab_out/log.jsonl --meta -                     # same JSON read from stdin (a heredoc / pipe)
@@ -53,8 +54,32 @@ def get(job, index=None):
         return ('wait', None)
 
 
+def try_tileset(tid, out):
+    """Top-down tileset: sheet PNG + metadata JSON (both answer 423 while generating)."""
+    base = 'https://api.pixellab.ai/mcp/tilesets/%s/' % tid
+    try:
+        with urllib.request.urlopen(base + 'image?inline=true', timeout=30) as r:
+            png = r.read()
+        with urllib.request.urlopen(base + 'metadata', timeout=30) as r:
+            meta = r.read()
+    except urllib.error.HTTPError as e:
+        return 'notfound' if e.code == 404 else 'failed' if e.code == 410 else 'wait'
+    except Exception:
+        return 'wait'
+    if png[:4] != b'\x89PNG':
+        return 'wait'
+    os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
+    with open(out, 'wb') as f:
+        f.write(png)
+    with open(os.path.splitext(out)[0] + '.json', 'wb') as f:
+        f.write(meta)
+    return 'ok'
+
+
 def try_job(job, out, frames):
-    """Returns 'ok', 'wait', 'notfound' or 'failed'; writes files when ok."""
+    """Returns 'ok', 'wait', 'notfound' or 'failed'; writes files when ok. frames -1 = a tileset."""
+    if frames == -1:
+        return try_tileset(job, out)
     if not frames:
         st, data = get(job)
         if st == 'ok':
@@ -135,6 +160,7 @@ def main(argv=None):
     ap.add_argument('job', nargs='?')
     ap.add_argument('out', nargs='?')
     ap.add_argument('--frames', type=int, default=0)
+    ap.add_argument('--tileset', action='store_true', help='the id is a top-down tileset (create_topdown_tileset)')
     ap.add_argument('--jobs')
     ap.add_argument('--out', dest='outdir', help='with --jobs: where to save (default: next to the jobs file)')
     ap.add_argument('--log')
@@ -160,12 +186,12 @@ def main(argv=None):
                 line, js = line.split('{', 1)
                 meta = json.loads('{' + js)
             p = line.split()
-            fr = int(p[2]) if len(p) > 2 else 0
-            todo.append((p[0], p[1], os.path.join(base, p[0] if fr else p[0] + '.png'), fr, meta))
+            fr = (-1 if p[2] == 'tileset' else int(p[2])) if len(p) > 2 else 0   # "<name> <id> tileset"
+            todo.append((p[0], p[1], os.path.join(base, p[0] if fr > 0 else p[0] + '.png'), fr, meta))
     else:
         if not (a.job and a.out):
             ap.error('give <job_id> <out> or --jobs file')
-        todo.append((os.path.basename(a.out), a.job, a.out, a.frames, load_meta(a)))
+        todo.append((os.path.basename(a.out), a.job, a.out, -1 if a.tileset else a.frames, load_meta(a)))
     started = time.time()
     end = started + a.timeout
     seen = logged_jobs(a.log)

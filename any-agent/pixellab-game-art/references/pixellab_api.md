@@ -81,12 +81,13 @@ refused for the tier anyway, switch to the fallback without asking.
 | Attack / skill animation | **two `edit_image_pro_flash` key poses → `animate_image` first→last, 10 frames** (animation.md) | long clips (up to 40 frames) → `animate_image_pixminimax` (Tier 1+) ; exact poses → `animate_with_skeleton_v3` |
 | Walk / idle loop | `animate_image` (`last_frame` = first frame for a loop) | a `create_character` character → `animate_character` with a template (`walking-8-frames`, `breathing-idle`, …) |
 | Spell / hit / aura VFX | **`vfx_workbench`** (free for subscribers; vfx.md) | - |
+| Normal map (lit sprites) | **`create_normal_map`** (0.5; a sprite, a GIF of frames, or a `character:`/`job:` id) - `/pga-normal` | - |
 | Inspect / hand-edit / lint pixel art | `pixelart_workbench` (free; start with `describe cli`) | - |
 | Clean up AI output | `correct_pixelart` (strength 0.1), `reduce_colors` (onto a game palette), `unzoom_image` (upscaled → true grid) - 0.1 gen each | - |
 | Photo / painting → pixel art | `image_to_pixelart` (1 gen; `faithful` + strength 100-300 to keep the source) | higher quality → `image_to_pixelart_pro_flash` (6) |
 | Recolour an animation into a new outfit | `transfer_outfit` (reference = the SAME character re-dressed; Tier 1+) | below Tier 1: `edit_image` with all frames in `image_urls` |
 | UI panel / frame | `create_ui_asset` (style_image = a screenshot of the game) | - |
-| Tilesets | top-down terrain: `create_topdown_tileset` (Wang, chain with base tile ids) · platformer: `create_sidescroller_tileset` · iso/hex/square sets: `create_tiles_pro` (Tier 1+) · roads: `create_path_tiles` (Tier 1+) · walls+floors: `create_building_kit` (Tier 1+) · single iso block: `create_isometric_tile` | - |
+| Tilesets | top-down terrain: `create_topdown_tileset(mode="pro")` (Wang, chain with base tile ids; `/pga-tiles`) · platformer: `create_sidescroller_tileset` · iso/hex/square sets: `create_tiles_pro` (Tier 1+) · roads: `create_path_tiles` (Tier 1+) · walls+floors: `create_building_kit` (Tier 1+) · single iso block: `create_isometric_tile` | - |
 | Bitmap font | `create_font` (80-glyph atlas, no space glyph) | - |
 | Talking portrait | `create_vocal_animation` → `create_talking_gif` / `get_lip_sync` | - |
 
@@ -97,7 +98,24 @@ refused for the tier anyway, switch to the fallback without asking.
 (house: Pro max for 16:10 ≈ 632×424). `no_background` defaults **true** - set false for scenes.
 `style_image_url` + `style_copy` (any of color_palette, outline, detail, shading);
 `reference_images` up to 4, each with a `usage` note ("scene layout, colors and lighting only");
-`palette` (hex list) / `palette_name` / `max_colors` to force a palette. Takes 1-10 min.
+`palette` (2-256 hex colours; every pixel of the result is one of them - "target palette", 2026-10-15)
++ `palette_name` (helps the look; the name alone does nothing) / `max_colors` (per image). With a
+palette, `style_copy` defaults to everything but color_palette. PixelLab says more tools get a target
+palette soon - until then Pro Flash takes an anchor in those colours + `style_options.color_palette`,
+others `apply_palette.py` afterwards. Takes 1-10 min.
+
+**`create_topdown_tileset`** - `mode: "pro"` (Tileset Pro, 2026-10-15): 16/32/64 px tiles, **15** gens
+≤32 px, 25 above; `standard` 1-4. Border: `roundness` (0 square, 1 round, 2 cut 45°),
+`boundary_amplitude` 0-0.3 (+ `boundary_seed`), `step_slope` 0-2 (transition 0.25 only),
+`connect_diagonals`, `raggedness`. Chain: `lower_base_tile_id`/`upper_base_tile_id`. Download sheet
+`/mcp/tilesets/<id>/image?inline=true` + `/metadata` (`fetch.py <id> x.png --tileset`). Recipe:
+library/ui_tiles.md "Terrain tilesets".
+
+**`create_normal_map`** - 0.5 gen, 15-70 s, result via `get_image`. `image`: an id
+(`character:<id>:<dir>[:<anim>]`, `job:<id>`, `upload:<id>`) or URL; animations as a **GIF** (a PNG
+strip counts as one image and is refused over 1024 px). The shapes are planned on frame 1 and
+carried over: split clips at big pose changes. `convention` opengl (Godot/Unity/Phaser) or
+directx (Unreal). Returns a strip for a clip. REST: `POST /v2/normal-map` (`frames` = strip count).
 
 **`create_image_pixflux`** - 1 gen, 10-40 s. Default 128×128; total area ≥ 1024 px.
 `no_background` (true for sprites), `view`, `direction`, `outline`, `shading`, `detail` (all *weak*

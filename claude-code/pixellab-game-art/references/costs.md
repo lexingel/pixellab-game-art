@@ -23,6 +23,10 @@ and `get_balance` before a big batch.
 | `create_character` | standard 1 · v3 2-9 · pro 10-25 | **v3 with a 96×200 reference: 3** (8 directions, 1 job) | rotating your own sprite is cheap |
 | `image_to_pixelart` / `_pro_flash` | 1 / 6 | - | |
 | `correct_pixelart`, `reduce_colors`, `unzoom_image` | 0.1 | - | |
+| `create_topdown_tileset` | standard 1-4 · pro 15 (≤32 px) / 25 | **pro 32 px: 15** (2 jobs, 2026-10-15) | draft with standard, final with pro |
+| `create_sidescroller_tileset` | 2-3 | - | |
+| `create_tiles_pro` | ~3 | **3** | Tier 1+ |
+| `create_normal_map` | 0.5 | **0.5** for a 96×200 sprite, an 11-frame and a 4-frame 256×244 clip (3 jobs) | per call, not per frame - but split clips at pose changes |
 | `vfx_workbench`, `pixelart_workbench` | free (subscribers) | **free** (498 + calls) | build effects here, not with generations |
 | `get_balance`, `get_upload_url`, `get_*`, `list_*`, `wait_for_jobs` | free | free | |
 | Failed job | - | **refunded** (balance confirms) | resubmit without worrying about cost |

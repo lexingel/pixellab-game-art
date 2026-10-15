@@ -47,6 +47,8 @@ preview first) · `--ref <image>` · `--n 3` (variations) · `--size WxH` · sty
 | `/pga-icon` | item / skill / status icons (+ rare/epic) | Sonnet |
 | `/pga-anim` | attack / skill animation: wind-up → hit | your own model |
 | `/pga-vfx` | painted effect clip (free) | Sonnet |
+| `/pga-tiles` | terrain tilesets that autotile: top-down Pro sets chained across terrains, platformer, hex/iso | Sonnet |
+| `/pga-normal` | normal maps so your engine can light sprites and animations (0.5 each) | Sonnet |
 | `/pga-batch` | many assets in one go, one review sheet | Sonnet |
 | `/pga-doctor` | checks the PixelLab connection, plan, Python, packages and project; prints the fix (free) | Haiku |
 | `/pga-feedback` | your choice about sharing results to improve the skill: status, on/off, preview, forget | Haiku |
@@ -193,7 +195,7 @@ Timing spec, layer vocabulary and pitfalls: **[references/vfx.md](references/vfx
 |---|---|
 | `check_setup.py <command>` | lists missing Python packages with the fix |
 | `upload.py <upload_url> <files…>` | local PNGs → `upload:<id>` refs (stdlib, no curl) |
-| `fetch.py <job> <out> [--frames N]` / `--jobs jobs.txt --out dir` | waits for jobs, downloads, logs one JSON line each to `log.jsonl` (refunded failures marked) |
+| `fetch.py <job> <out> [--frames N \| --tileset]` / `--jobs jobs.txt --out dir` | waits for jobs, downloads, logs one JSON line each to `log.jsonl` (refunded failures marked) |
 | `cost_report.py <log.jsonl>` | generations spent per command / tool / day |
 | `pad_sprite.py` | sprite onto a padded canvas, prints the offset |
 | `qa.py` | automatic checks before anyone looks |
@@ -208,6 +210,8 @@ Timing spec, layer vocabulary and pitfalls: **[references/vfx.md](references/vfx
 | `ground_snap.py <sprite> <pad> <frames…>` | puts every frame's feet back on the standing sprite's ground line |
 | `colormatch.py <sprite> <frames…>` | fixes colour shift: matches each frame's brightness to the standing sprite and snaps to its colours (free) |
 | `recolor_trail.py` / `slash_layer.py` | turn generator streaks into an effect colour / lift a crescent slash onto another swing |
+| `normal_map.py gif\|split\|preview` | packs frames into the GIF `create_normal_map` reads, cuts the returned strip into `<frame>_n.png`, lights the result from 3 sides to check it |
+| `tileset_preview.py <map.png> <sheets…>` | paints a random test map from top-down tilesets (a chain in order) to check seams |
 
 ## Budget rules
 
