@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.1 - 2026-10-15
+- Hit reaction recipe (one peak pose + two 6-frame clips, ~33 gens) in `references/animation.md`.
+- New `scripts/colormatch.py`: removes the brightness/colour shift generated poses get (matches each frame to the
+  standing sprite, then snaps to its colours). Also noted: yellow swipe flashes can appear even on clean poses.
+
 ## 1.3.0 - 2026-10-14
 - `/pga-update`: gets the weekly update and merges it into your install - backs up the old one, installs
   the new one with the same options (and your models.json picks), keeps skill files you edited and has

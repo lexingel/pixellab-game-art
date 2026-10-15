@@ -201,6 +201,7 @@ Timing spec, layer vocabulary and pitfalls: **[references/vfx.md](references/vfx
 | `analyze_style.py <png/gif/folder>` | measures a reference's style (scale, palette, outline, tones, dithering, light, GIF timing) for `/pga-analyze` |
 | `apply_palette.py <palette> <files>` | snaps generated art to a palette or N colours (enforces colour rules, free) |
 | `ground_snap.py <sprite> <pad> <frames…>` | puts every frame's feet back on the standing sprite's ground line |
+| `colormatch.py <sprite> <frames…>` | fixes colour shift: matches each frame's brightness to the standing sprite and snaps to its colours (free) |
 | `recolor_trail.py` / `slash_layer.py` | turn generator streaks into an effect colour / lift a crescent slash onto another swing |
 
 ## Budget rules

@@ -318,8 +318,21 @@ Fire the impact (damage numbers, hit flash, VFX, projectile release) on the hit 
   objects, same colours"*.
 - **Death**: edit a "defeated" pose as the last frame, 4 frames, *"is struck down: staggers, knees
   buckle, drops to one knee and slumps forward…, body motion only, no effects…"*.
-- **Hurt**: 4 frames prompt-only is still fine: *"recoiling backward from a heavy hit, flinching and
-  staggering, then steadying, body motion only, colours unchanged, no light effects"*.
+- **Hurt / hit reaction** (tested 2026-10-15, body only, no effects): only the **peak pose** needs
+  painting (the standing sprite is the other key). Pad the standing sprite with room behind (96x200 -> 144x200,
+  x=40 for a right-facing hero), make **one** peak pose with `edit_image_pro_flash` (dynamic layer: *"thrown
+  backward, head snapped back, shoulders rocked back, arms lifted a little from the sides, open empty hands,
+  tabard flaring, feet planted in the same place, nothing in the air around him"*; two seeds, pick one), then two 6-frame
+  `animate_image` clips: stand -> peak ("jolts backward ... in one fast snap") and peak -> stand ("catches
+  himself and straightens back up"), each with `first_frame_url` + `last_frame_url`, ~3 gens each, 13 frames,
+  drop the duplicate peak. Hold ~60 ms/frame, 200 ms on the peak, 300 ms standing. ~33 gens with the base.
+  Pitfalls: (1) the generator painted yellow swipe arcs on 2 of the 7 hit-clip frames even though the pose
+  was clean - `qa.py --anim` flags them, `scrub.py --keep-main` fixes one, drop a frame that comes out with
+  holes; (2) the peak pose and recovery frames came out ~15-20% **brighter** than the standing sprite - a
+  visible colour shift mid-move: run `scripts/colormatch.py <standing> <frames>` before the sheet/GIF.
+  Old prompt-only version (no key poses):
+  *"recoiling backward from a heavy hit, flinching and staggering, then steadying, body motion only,
+  colours unchanged, no light effects"*.
 - **Walk**: prompt-only, 8 frames, `last_frame = first frame` for a clean loop, often from a 64 px copy.
 - Props mutate between frames → add *"keeps holding the same <prop> in the same hand, unchanged in
   shape and size"*. Brightness flicker on glows → *"keep exactly the same colour and brightness in
