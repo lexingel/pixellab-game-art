@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.3.2 - 2026-10-15
+- Kick recipe for a cartoon reference (convert, pad, 3 short clips) and the double-kick pitfall in `references/animation.md`.
+
 ## 1.3.1 - 2026-10-15
 - Hit reaction recipe (one peak pose + two 6-frame clips, ~33 gens) in `references/animation.md`.
 - New `scripts/colormatch.py`: removes the brightness/colour shift generated poses get (matches each frame to the

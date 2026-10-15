@@ -333,6 +333,15 @@ Fire the impact (damage numbers, hit flash, VFX, projectile release) on the hit 
   Old prompt-only version (no key poses):
   *"recoiling backward from a heavy hit, flinching and staggering, then steadying, body motion only,
   colours unchanged, no light effects"*.
+- **Kick / any 3-part move from a smooth cartoon reference** (tested 2026-10-15, 19 frames, ~55 gens): a
+  high-res non-pixel reference -> `image_to_pixelart` (1 gen, 128x128, `faithful: true`, strength 150 beat
+  250 and non-faithful for colour) -> flood-fill the grey background from the corners (it comes back opaque)
+  -> pad (192x144) -> two poses (chamber, extended kick; 2 seeds for the extension) -> THREE clips: stand ->
+  chamber (6), chamber -> kick, kick -> stand (6). The 10-frame chamber -> kick clip retracted the leg and
+  kicked twice (non-monotonic) and painted a white swipe at the foot; the **6-frame clip with the path pinned**
+  (*"the raised knee stays up, then the lower leg unfolds and snaps out; the foot never goes back to the
+  ground"*) was clean. Shorter clips for a two-pose snap, pin "never goes back". Then `ground_snap.py`
+  (needs `x,y` pad offset as one argument) and `colormatch.py`.
 - **Walk**: prompt-only, 8 frames, `last_frame = first frame` for a clean loop, often from a 64 px copy.
 - Props mutate between frames → add *"keeps holding the same <prop> in the same hand, unchanged in
   shape and size"*. Brightness flicker on glows → *"keep exactly the same colour and brightness in
