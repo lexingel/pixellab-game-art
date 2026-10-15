@@ -12,14 +12,37 @@ PixelLab before; deep enough to keep using after.
 | **Claude Code** | [`claude-code/`](claude-code/) - slash commands (`/pga-start`, `/pga-char`, …) |
 | **Codex, Gemini CLI, Cursor, GitHub Copilot, OpenCode** or another agent | [`any-agent/`](any-agent/) - the same skill in the open Agent Skills format |
 
-## Easiest start
+## Easiest start (about 5 minutes)
 
-1. Download this repository (green **Code** button → *Download ZIP*, then unzip) or `git clone` it.
-2. Open your AI assistant in the downloaded folder and say:
-   **"Set up the PixelLab skill for me - follow SETUP_FOR_AI.md."**
-3. It installs everything and checks it. You only install Python if it's missing, get your PixelLab
-   token (free account at https://pixellab.ai) and run one command with it.
-4. Say `/pga-init` (your art style), then `/pga-start` - a guided first project that explains every step.
+**1. Download it.** On this page click the green **Code** button → **Download ZIP**. Then unzip it:
+Windows - right-click the ZIP in your Downloads → *Extract All…*; Mac - double-click it. You get a
+folder called `pixellab-game-art-main`.
+
+**2. Open your AI assistant inside that folder.** The assistant has to be "in" the folder so it can
+read the setup instructions that came with it:
+
+| You use | Do this |
+|---|---|
+| **Claude desktop app** (Code tab) | Start a new session and choose the `pixellab-game-art-main` folder as the folder to work in. |
+| **Claude Code** in a terminal | Open a terminal in the folder (below), type `claude`, press Enter. |
+| **Codex CLI** / **Gemini CLI** / **OpenCode** | Open a terminal in the folder (below), type `codex` / `gemini` / `opencode`, press Enter. |
+| **Cursor** / **VS Code** (Copilot) | *File → Open Folder…* → pick the folder, then open the chat (agent) panel. |
+
+*Open a terminal in a folder:* **Windows** - open the folder in File Explorer, click the address bar, type
+`cmd`, press Enter. **Mac** - right-click the folder in Finder → *New Terminal at Folder*.
+
+**3. Copy this sentence into the assistant's chat and send it:**
+
+> Set up the PixelLab skill for me - follow SETUP_FOR_AI.md.
+
+The assistant reads the instructions file and installs everything itself. It only asks you for three
+things: install Python if it's missing, make a free PixelLab account at https://pixellab.ai and copy
+your token, and run **one** command it gives you with that token (paste the token into that command
+yourself - never into the chat). Then it tells you to restart the assistant.
+
+**4. Make your first art.** Restart the assistant in your game's folder (any folder works) and type
+`/pga-init` (pick your art style), then `/pga-start` - a guided first project that explains every step.
+On assistants other than Claude Code, type them without the slash: `pga-init`, `pga-start`.
 
 Each folder's README has the manual setup, every command, costs and waits, a glossary, engine import
 notes and the privacy note (sharing results with the authors is off unless you turn it on).

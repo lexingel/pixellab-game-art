@@ -7,8 +7,20 @@ engine-ready spritesheets. Distilled from ~4,300 real PixelLab jobs on a dark-fa
 
 ## Easiest: let your AI assistant set it up
 
-1. Download this folder (or `git clone` it) and open your AI assistant (Claude Code) in it.
-2. Say: **"Set up the PixelLab skill in this folder for me - follow SETUP_FOR_AI.md."**
+1. Unzip the download and open your AI assistant **inside that folder** - it has to be "in" the folder
+   to read the setup instructions:
+
+   | You use | Do this |
+   |---|---|
+   | **Claude desktop app** (Code tab) | Start a new session and choose the `pixellab-skills` folder as the folder to work in. |
+   | **Claude Code** in a terminal | Open a terminal in the folder (below), type `claude`, press Enter. |
+   | **Codex CLI** / **Gemini CLI** / **OpenCode** | Open a terminal in the folder (below), type `codex` / `gemini` / `opencode`, press Enter. |
+   | **Cursor** / **VS Code** (Copilot) | *File → Open Folder…* → pick the folder, then open the chat (agent) panel. |
+
+   *Open a terminal in a folder:* **Windows** - open the folder in File Explorer, click the address bar, type
+   `cmd`, press Enter. **Mac** - right-click the folder in Finder → *New Terminal at Folder*.
+
+2. Copy this sentence into its chat and send it: **"Set up the PixelLab skill in this folder for me - follow SETUP_FOR_AI.md."**
 3. It installs everything and checks it. The only things it asks of you: install Python if it's
    missing, get your PixelLab token (free account at https://pixellab.ai) and run **one** command with
    it, then restart the assistant in your game's folder.
