@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.1 - 2026-10-16
+
+### What we learned
+- Front-facing giant bosses (references/animation.md): draw them waist-up rising out of a crack,
+  name sides by the image, 11 frames inside the 256² cap (8 + a 4-frame splice), ground-snap by a
+  body band (not the lowest pixel), motion-only idle wording. A full set measured at 136 generations.
+
 ## 1.4.0 - 2026-10-15
 
 **Skill**

@@ -282,6 +282,29 @@ switches hands on the mirrored side - fine for most games; generate all 8 if not
      compass grid to compare them.
 5. **Cost of the tested run**: front 6 + rotations 3 + 5 directions × 7 + 4 re-rolled × 7 = **72**.
 
+## Front-facing giant bosses (tested 2026-10-16, a 256² raid boss)
+
+A boss fought from both sides faces the viewer, so its swings go sideways and down, not forward.
+
+- **Draw it waist-up, rising out of something** (a crack, water, a pit). No legs means the 256²
+  Pro Flash limit goes to the hands and head, and the "ground" is the crack, not feet. Leave ~20 px
+  of margin around the body: the canvas can't be padded past 256², and swings need that room.
+- **Name the side by the image, not the body**: "the arm on the left side of the image". The six
+  key poses (wind-up + hit for left swipe, right swipe, two-handed slam) all came out right first try.
+- **11 frames within the 256² cap**: `animate_image` 8 frames (9 incl. A) + one 4-frame splice
+  between the two frames either side of the biggest jump (usually frames 2→3) = 12; drop one settle
+  frame → 11. Cost per move: 9 + 9 + 8 + 4 = 30.
+- **Ground-snap by a body band, not the lowest pixel**: impact sparks and bursts below the crack
+  fooled "lowest opaque row" (it shifted frames 8-14 px). Matching the crack's colour band between
+  frame and base worked for swipes; for a slam (fists and burst cover the crack, the torso lowers on
+  purpose) don't snap at all.
+- Idle with "breathes … glow pulsing" came back washed white; motion-only wording ("shoulders lift
+  and lower by a few pixels, hands don't move") was clean. Total for still + 3 moves + idle/hurt/death
+  with one re-roll: **136**.
+- **On screen**: a 256² sprite next to ~150 px heroes needs ~1.4× to read as a giant. If your engine
+  snaps to whole pixel scales, decide between 1× (crisp, small) and a fractional scale for the boss
+  only; show both before choosing.
+
 ## Pick frames
 
 Download indices 0-10 (`scripts/fetch.py <job> <dir> --frames 11`), then `scripts/qa.py <dir>/*.png --anim`
