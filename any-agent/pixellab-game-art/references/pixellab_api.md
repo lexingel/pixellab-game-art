@@ -161,6 +161,18 @@ dirs), `v3` (2-9, best, up to 256, the only mode that rotates a reference sprite
 `reference_image_url` must face the viewer (south) or every direction label is off by the turn.
 `view`: low top-down / high top-down / side. `proportions` presets (chibi, heroic, …).
 
+**`create_image_pro_flash` with a `style_image`:** the style image must fit inside the requested canvas
+("Style image must fit the native canvas") - a 40 px icon scaled up to 80 as a style reference blocks a
+64x64 request. Ask for a canvas at least as big as the style image (96 for icons, 64 for tiny UI glyphs)
+and crop/pad the result to the game's size afterwards (crop to the bbox and pad square rather than
+rescaling pixel art by a non-integer factor).
+
+**Jobs at once is per account, not per batch:** a runner that submits 14 jobs while 8 character
+animations and 13 `animate_image` jobs are still running hits the cap (20 on this tier) and gets
+rejections - submit in waves and re-submit the rejected ones; never cancel someone else's jobs to make room.
+When the monthly generations are used up, jobs bill to purchased credits at the quoted generation count
+(~$0.008/gen here); the quote printed at submit is provisional - read the balance before and after.
+
 **`create_1_direction_object`** - one call returns many candidates by size (≤42 → 64, ≤85 → 16,
 ≤170 → 4, else 1); `view` top-down or sidescroller; `style_images` (up to 8 at small sizes);
 `item_descriptions` per slot. Result enters **review**: `get_object`, then `select_object_frames` or

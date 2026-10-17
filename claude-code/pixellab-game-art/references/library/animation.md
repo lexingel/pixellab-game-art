@@ -87,6 +87,18 @@ key poses gives a big readable wind-up-to-hit; 10 in-between frames keep the fas
 - **Weak motion.** The prefix `big dramatic attack: … exaggerated motion … then recovering` helped
   on 4–8 frame prompt-only moves. Keyframes made it unnecessary.
 
+- **A lunge runs off the canvas.** Deep forward lunges (rapier, spear, greatsword) push the back leg and
+  coat past the canvas edge behind the body. Give every lunge move ~48 px more room behind before
+  drawing pose B (re-pad pose A onto the wider canvas, redraw B); finding it after the fact costs a
+  second Pro Flash pose (2026-10-17: a rapier captain's attack on a 192-wide canvas).
+- **Extra signature moves for a character that already has an attack** (roar, brand, snipe, curse...):
+  reuse the existing attack's frame 1 (its wind-up, same padded canvas and pad) as `first_frame_url`
+  and draw only the new hit pose B. One Pro Flash pose + `animate_image` 8 frames + a 4-frame splice
+  ≈ 21 gens per move instead of ~30; the pad and feet already match the other moves.
+- **Roars and "snipe" thrusts on bulky or coiled bodies come out subtle** (a serpent roar, a robed
+  trident thrust barely differ from the wind-up). Push the pose wording harder (head thrown far back,
+  jaws wide, neck stretched to the top of the canvas) or accept a small move.
+
 ### Legacy / superseded (still useful for walks)
 Walk cycles are still prompt-only. They used 8 frames, often `last_frame = first_frame`, and
 small 64px copies for the hamlet:
