@@ -98,6 +98,13 @@ key poses gives a big readable wind-up-to-hit; 10 in-between frames keep the fas
 - **Roars and "snipe" thrusts on bulky or coiled bodies come out subtle** (a serpent roar, a robed
   trident thrust barely differ from the wind-up). Push the pose wording harder (head thrown far back,
   jaws wide, neck stretched to the top of the canvas) or accept a small move.
+- **A splice segment can come back as one giant painted burst** covering the body (a "snipe" splice
+  painted a muzzle blast the size of the canvas). Look at every splice before assembling. Free fallback:
+  build the 11 frames from the 8 raw frames by holding the wind-up beats (`0,1,1,2,2,3,4,5,6,7,8`); the
+  padded wind-up -> hit rhythm survives and it costs nothing (2026-10-18, 1 bad splice in 13).
+- **Slow queue days.** Animation jobs can sit at 90-95% for 15-30 minutes before finishing; a fetch
+  timeout is not a failure, keep re-fetching. The account caps live jobs at 20, so parallel agents must
+  submit in waves.
 
 ### Legacy / superseded (still useful for walks)
 Walk cycles are still prompt-only. They used 8 frames, often `last_frame = first_frame`, and

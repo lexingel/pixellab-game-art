@@ -79,3 +79,11 @@ pixel art heraldic emblem, coiled serpent snake in an S shape with head raised, 
 - A status/buff icon and the skill that applies it need different subjects (skill: winged hourglass; status chip: lightning bolt with speed lines), or the chip reads as "the skill" instead of "the effect".
 - Picking at 32px: dark iron/black objects vanish on dark UI panels — prefer the steel/light-grey candidates; symmetric, upright silhouettes read better than tilted ones; skip candidates with stray sparkle pixels in the corners.
 - Make a contact sheet (all candidates at 3x on the UI's background colour, numbered) and look before choosing.
+- Pro Flash at the icon's **final size** (32x32 canvas, a 32x32 icon of the set as the style image) is clean;
+  drawing at 64x64 and downscaling 2x came out muddy and speckled next to the native set. 5 gens per job.
+  Four icons on one 2x2 canvas is cheaper per icon but each cell is cruder - not worth it for a shipped set.
+- Replacing a legacy set: list every *meaning* each old icon stood for first (one old file often meant 3-12
+  things), then reuse a fitting existing icon where one exists, draw only the rest, and hand-draw tiny UI
+  glyphs (confirm, back, sort, music controls) in code - 2026-10-18: 132 meanings -> 65 reuses, 46 drawn,
+  21 hand-drawn, ~2.25 USD.
+- Two "open book" icons (log, journal/pages) look alike at 32px - give each a different subject.

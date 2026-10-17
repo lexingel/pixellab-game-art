@@ -113,4 +113,14 @@ one `render {"patch":[{"op":"set","path":"ramps.main","value":[...]}]}` and an e
 - In-engine size: an effect sized from its target's height turns into a wall of blocks on a giant boss. Cap clip /
   burst / ring sizes at hero scale (~0.4 of the arena height) and skip invisible hit regions.
 - Exports pack frames in a near-square grid; repack into your engine's column layout from the JSON frame rects.
+- More workbench gotchas (2026-10-18, 32 redrawn effects): a `burst` particle layer ignores its radius (spread with
+  `rise` or `twinkle`); a `ride` layer offsets things along a path; `"mirror"` is not a layer field; a ring of puffs
+  makes a good shockwave (`closed:false` curve, `fill:"cartoon"`); a clip whose feet sit below its canvas works with
+  an out-of-canvas origin; even width 1.5 on a ground-plane ring stays a wide plate.
+- Sprites your engine tints at runtime must be drawn in a neutral white-to-grey ramp (with the dark outline), or
+  the tint muddies them; expect them to read a little duller than the old near-white art - check in game.
+- Procedural engine particles (square CPU particles for sparkles, trails, shockwaves) can be swapped for small
+  painted clips with the same call signature: a 96px sparkle burst, a converging-motes variant, a 48x16 looping
+  comet tail on a pivot at the shot's centre, a flat 128x48 ring of puffs played at `0.5 / duration` speed.
+  Keep stretchy telegraph lines as lines, but outline them (5px dark under 3px colour).
 
