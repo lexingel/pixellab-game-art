@@ -105,6 +105,14 @@ key poses gives a big readable wind-up-to-hit; 10 in-between frames keep the fas
 - **Slow queue days.** Animation jobs can sit at 90-95% for 15-30 minutes before finishing; a fetch
   timeout is not a failure, keep re-fetching. The account caps live jobs at 20, so parallel agents must
   submit in waves.
+- **Looping a building or scene prop** (banners in the wind, a portal turning, a campfire): `animate_image` with the
+  building as the first frame drifts on stone and windows, worse toward the last frames (lit windows went white by
+  frame 5 of 6). Keep the generated pixels only inside a dilated mask of the moving parts (banner cloth, portal
+  colour, flames) and the base everywhere else; drop drifted end frames and ping-pong the rest. Cost: ~3 gens for
+  a 192x144 building, 1 for 96x96, per 6 frames.
+- **Small townsfolk that match existing walk sprites:** Pro Flash on the same canvas with one of the game's walk
+  frames as the style image, then an 8-frame walk; ~6 gens a character. A style image larger than the canvas is
+  rejected outright (no charge), so draw animals on the same canvas, small and low, rather than a smaller canvas.
 
 ### Legacy / superseded (still useful for walks)
 Walk cycles are still prompt-only. They used 8 frames, often `last_frame = first_frame`, and
