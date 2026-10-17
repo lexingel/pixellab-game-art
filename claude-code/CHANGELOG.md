@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### What we learned
+- Monster hurt and wind-up (references/animation.md "Other actions"): hurt on the attack's padded
+  canvas from one painted recoil peak and a 4-frame clip played there and back (~13 gens); the clip's
+  action must be motion only ("heavy blow" painted bursts); colormatch the body-only frames, not the
+  attack frames. Wind-up = padded still -> the attack's pose A, 4 frames (4 gens).
+
 ## 1.4.1 - 2026-10-16
 
 ### What we learned

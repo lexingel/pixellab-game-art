@@ -147,6 +147,15 @@ Billed per direction on the **generated** canvas (a 96×200 sprite animated on ~
 The model reads "forward" as screen-right in every direction: name the aim in screen terms, one
 direction per call (animation.md → "8 directions").
 
+**Big characters (≥ ~200 px) and template walks (tested 2026-10-17, a 256² v3 character):** `mode: "template"`
+redraws the character every frame in batches (up to 8 gens/direction, 30-60 min) and drifts badly at this
+size - the cape vanished, front and back views swapped mid-cycle, skin/clothes changed colour. `mode:
+"skeleton-v3"` with the same `template_animation_id` moves the drawing instead: on-model in all 8 directions,
+3 gens/direction, ~12 min. Use skeleton-v3 for any walk/run on a large character; keep plain template for
+small sprites (≤ ~100 px, 1 gen). A failed direction ("heavy load") can be re-queued into the same
+`animation_group_id`; a server error on the call may still have queued every direction - check get_character
+before resubmitting.
+
 **`create_character`** - `mode`: `standard` (1 gen, template skeleton, ≤128), `pro` (10-25, always 8
 dirs), `v3` (2-9, best, up to 256, the only mode that rotates a reference sprite).
 `reference_image_url` must face the viewer (south) or every direction label is off by the turn.

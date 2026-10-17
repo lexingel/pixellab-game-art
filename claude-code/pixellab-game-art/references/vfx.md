@@ -103,3 +103,14 @@ one `render {"patch":[{"op":"set","path":"ramps.main","value":[...]}]}` and an e
   raw layers (arc / puffs / shape / particles / rays / ring / flame).
 - Check key frames (`"frames": [2,5,8,10]`) on every patch before exporting.
 - The attacker's swing frames should replace a generic hit burst, not stack on top of it.
+- Workbench gotchas (2026-10-17, ~45 effects): patch ops are set / remove / add_layer {"layer": {...}} / remove_layer
+  (not "add"/"value"); render `frames` are 1-based; particle gravity max 200, chunk size max 8; a ground-plane ring's
+  width balloons into a plate (use half); depth "auto" only works with edge/linear/radial/flat fills; a beam turned 180
+  is cut by the top edge (animate an upright beam's foot y and height with top_fade instead).
+- Crystal / ice spikes: `beam` with taper 1, soft 0, a few angled copies; `flame` reads as fire, never as crystal.
+- A one-ring "grip" reads as a portal: two thick `arc`s closing like a vise read as squeezing.
+- Painted, outlined clips must NOT be drawn additively (they wash out); additive is only for pure glows.
+- In-engine size: an effect sized from its target's height turns into a wall of blocks on a giant boss. Cap clip /
+  burst / ring sizes at hero scale (~0.4 of the arena height) and skip invisible hit regions.
+- Exports pack frames in a near-square grid; repack into your engine's column layout from the JSON frame rects.
+

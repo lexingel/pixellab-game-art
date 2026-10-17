@@ -305,6 +305,38 @@ A boss fought from both sides faces the viewer, so its swings go sideways and do
   snaps to whole pixel scales, decide between 1× (crisp, small) and a fractional scale for the boss
   only; show both before choosing.
 
+## Named characters on the body pipeline (tested 2026-10-17, 26 champions)
+- A one-off character runs through the same pose/animate scripts as a one-stage body: its own portrait is
+  the still, no gear suffix. ~6 gens per 11-frame take, ~20 per character for attack + skill + hurt.
+- Punch and fire-hand casts often flash the whole body bright for 3-4 frames (the model "lights" the hit).
+  Re-take with ", no glow, no flash, no sparks, colours stay the same" in the action; it fixed fists. A fire
+  caster got worse (flame arcs over the body), so judge both takes side by side and keep the better one.
+- Hurt takes paint a burst (smoke, a ghost, a spark) on in-betweens 1-3 for about 40% of characters. Look
+  at the sheet and pick a per-character order: [3,4,4,3,0] when 3 is clean after scrub, [4,4,4,4,0] when not.
+- A weapon that already trails its own glow (ghost-flame blade) gives no crescent to harvest (0 px
+  cleared): skip the crescent, the trail does the job.
+
+## Audit before you ship a batch (2026-10-17, 797 sequences checked)
+Run cheap numbers over every installed frame, then look at a sheet of all of them; the numbers find where to look.
+- **Edge pixels**: a key pose that touches the canvas border bakes the cut into every in-between. Check pose B's
+  borders before animating (>15 opaque px on a side = re-pose on a canvas with more room on that side). A lunge
+  carries the cape and back leg out behind, so leave room behind as well as in front.
+- **Detached pieces** over ~150 px in a skill: often a weapon thrown away. A raised-arms end pose ("both arms raised
+  to the sky") made the generator drop the staff or mace in about half the casters. Write the weapon into pose B
+  ("raising the staff high in both hands").
+- **Hurt in-betweens**: about half the takes paint a burst or darken the body on frames 1-2 (sometimes 3). Measure
+  mass and mean brightness of frames 1-3 against frames 0 and 4 (>10% more mass or >12% brightness change = dirty) and
+  pick the order per character: [2,4,4,3,1] clean, [3,4,4,3,0] when 1-2 are dirty, [4,4,4,4,0] when 3 is too.
+- **Crescent harvests**: look at every extracted crescent. A stray spark or a ghost of the body gets harvested when the
+  cut is weak; then keep the plain frames.
+- **animate_image limits** (hit 2026-10-17): frame_count must be even, and frame_count x width x height must stay
+  under 524,288 px. 192x256 allows 10 (11 frames); a 240x256 canvas allows only 8 (9 frames). When a swing needs a
+  wider canvas, crop the poses to their joint bounding box first; if it still doesn't fit, accept 9 frames.
+- **Re-takes**: reinstall only the move you re-took. Installed frames can drift from the pipeline folders (manual
+  fixes), and a full reinstall silently reverts them.
+- **Washed frames**: colormatch fixes a glow (brightness off by 10-20%) but turns a white-washed frame muddy grey;
+  drop those frames instead.
+
 ## Pick frames
 
 Download indices 0-10 (`scripts/fetch.py <job> <dir> --frames 11`), then `scripts/qa.py <dir>/*.png --anim`
@@ -353,6 +385,42 @@ Fire the impact (damage numbers, hit flash, VFX, projectile release) on the hit 
   was clean - `qa.py --anim` flags them, `scrub.py --keep-main` fixes one, drop a frame that comes out with
   holes; (2) the peak pose and recovery frames came out ~15-20% **brighter** than the standing sprite - a
   visible colour shift mid-move: run `scripts/colormatch.py <standing> <frames>` before the sheet/GIF.
+  **Cheaper variant for foes/monsters** (tested 2026-10-16, 10 foes): draw the hurt on the **same padded
+  canvas as the attack** (one pad offset per character covers every action), paint the recoil peak
+  (*"reeling from a heavy blow, dynamic exaggerated pose: head snapped back, torso thrown far back toward
+  <away>, staggering onto the back foot, arms flung out"*; beasts: *"rocked back onto its hind legs"*;
+  floaters: *"tilted far back, the same size as before"*), then ONE 4-frame clip padded still -> peak (4 gens
+  at 256x232) and play it there and back: frames 2,4,4,3,1 (~13 gens a foe). **The clip's action must be
+  motion only**: *"is knocked back by a heavy blow"* painted impact bursts / white swooshes on 2 of 3;
+  *"head and torso jerk back and away, staggering back onto the back foot"* came out clean. An open-ended
+  clip without the painted peak (just the padded still, 6 frames) was worse: bursts and barely any body
+  motion. If one in-between comes out doubled or flinching forward, skip it (e.g. 1,4,4,1). Then
+  `colormatch.py` on the hurt (and wind-up / death) frames - not on attack frames, it would recolour the
+  slash/fire trails; the recoil clips came out up to ~15% darker.
+  Second batch (2026-10-16, 10 more foes): 2 of 10 recoil poses came back unusable. An archer flung its bow
+  away from its hand, and a beaked brute turned to face the other way. Re-rolled with *"the bow still gripped
+  tightly in its hand"* and *"head snapped back with the beak still pointing left"*, both fine. Put "<weapon>
+  still gripped in its hand" and "still facing <side>" in every recoil prompt from the start. A water
+  creature's hurt clip painted body-coloured water swooshes; `scrub.py --keep-main` drops the detached ones but
+  not one attached to a hand, so skip that frame (2,4,4,3). White claw streaks that match a dark creature's
+  highlights survive the colour test; a brightness cut (white/yellow blobs > 12 px) removes them. When a
+  death clip paints a cloud or swirls twice, build the death from frames you already have instead: two
+  hurt-clip frames (knocked back), then the clean last frames of the bad take (the collapse).
+- **A shared body cast (many characters on one drawn body, tested 2026-10-17, 50 bodies):** the stage-1 still
+  from `create_image_pro_flash` with the class hero as `style_image` ("copy this character's pixel art style,
+  size, proportions, outline, shading and pose; draw a different character") came out on-model 14 of 15 times
+  at 96x200 (6 gens, 3 seeds each). Stages 2/3 as `edit_image_pro_flash` on stage 1 ("The same woman, same
+  face, same pose, same size and framing: now in reinforced gear: ...") kept the identity every time. Then the
+  hero recipe per body (~24 gens: 11-frame attack and skill, 4-frame hurt, 6-frame death, a 6-frame idle loop
+  first = last frame on the still). Re-roll fixes: a lunging dual-dagger attack stood up mid-move until the
+  action said "stays low the whole time ... never standing up or lifting the blades overhead" plus a new seed;
+  a shield-bash still lifts the shield overhead mid-move on some bodies; a 4-frame hurt clip can paint pale
+  bursts on its in-betweens (play only the recoil frame, 4,4,4). Voice Design refuses a child's voice
+  ("safety guidelines"): describe a small, young adult instead.
+- **Wind-up (telegraph) for a monster** (2026-10-16): `animate_image` padded still -> the attack's pose A,
+  `frame_count` 4 (4 gens), *"slowly gathers itself and draws back into the wind-up, ready to strike"*; the
+  last frame IS pose A, so the engine can hold it until the blow lands. Watch for a duplicated prop on one
+  in-between (a second torch) - swap in the neighbouring frame.
   Old prompt-only version (no key poses):
   *"recoiling backward from a heavy hit, flinching and staggering, then steadying, body motion only,
   colours unchanged, no light effects"*.
