@@ -3,6 +3,11 @@
 ## Unreleased
 
 ### What we learned
+- vfx_workbench presets (references/vfx.md) render in their own look (rings, glow cores, stock ramps), not the
+  fixed recipe's painted one: start a matching set from the fixed recipe or a saved effect, never preset
+  defaults. Free for subscribers at 0 plan generations.
+- Credits past the allowance (references/costs.md): measured ~$0.0054 per generation; a Pro Flash 96x200 still
+  (class sprite as style image) ~$0.03, 24 of 24 usable first try.
 - Monster hurt and wind-up (references/animation.md "Other actions"): hurt on the attack's padded
   canvas from one painted recoil peak and a 4-frame clip played there and back (~13 gens); the clip's
   action must be motion only ("heavy blow" painted bursts); colormatch the body-only frames, not the

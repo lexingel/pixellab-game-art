@@ -55,6 +55,13 @@ crimson  #1e0710 #52012f #a3014b #d8306a #f080a0 #ffe0ea
 spectre  #07120e #223e3b #416e60 #4fbf6a #9cf07a #e6ffd0
 ```
 
+**Presets are not this recipe.** `start --preset explosion | impact_burst | heal_pillar ...` renders in the
+preset's own look: perfect rings, radial glow cores, stock saturated ramps (`frost`, `holy`...). Next to effects
+built from the fixed recipe they read as another game. For anything that must match your set (in-game effects,
+or a batch exported as training/reference art for another tool) start from the fixed recipe or one of your saved
+effects (`start --effect <id>`), never a preset's defaults; compare a few frames side by side first. The workbench
+is free for subscribers even with 0 plan generations left (build, render, export, game packs).
+
 ## Workflow
 
 ```

@@ -50,6 +50,7 @@ The official 10-25 matches the newer prices; the older 40 for large scenes no lo
 | Job | Generations |
 |---|---|
 | A monster sprite (Pro Flash 200×200, the current pick) | 6 · pixflux draft 1 |
+| A character still (Pro Flash 96×200, class sprite as the style image) | 6 (24 of 24 usable on the first try in one batch) |
 | A hero sprite (Pro Flash 96×200) | 6 |
 | A battle background (Pro 640×256) | 25 (was 40) |
 | A screen backdrop (Pro 624×392) | 25 (was 40) |
@@ -68,3 +69,10 @@ The official 10-25 matches the newer prices; the older 40 for large scenes no lo
 | Walk cycle from a 64 px copy (8 frames) | 1 |
 | A painted VFX clip | 0 |
 | 5 base classes × (attack + skill), incl. one re-roll, one refunded failure | 239 (balance-checked) |
+
+## Past the plan allowance
+
+When the plan's generations are used up, jobs bill to credits automatically. Measured: 144 generations
+(24 Pro Flash 96×200 stills) cost $0.78, about **$0.0054 per generation**, so a 6-generation still is about $0.03.
+Check `get_balance` before and after a batch; the 20-jobs-at-once cap still applies (resubmit the rejected ones
+when slots free up).
