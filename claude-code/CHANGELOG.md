@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.4.2 - 2026-10-19
 
 ### What we learned
 - vfx_workbench presets (references/vfx.md) render in their own look (rings, glow cores, stock ramps), not the
