@@ -417,6 +417,16 @@ Fire the impact (damage numbers, hit flash, VFX, projectile release) on the hit 
   a shield-bash still lifts the shield overhead mid-move on some bodies; a 4-frame hurt clip can paint pale
   bursts on its in-betweens (play only the recoil frame, 4,4,4). Voice Design refuses a child's voice
   ("safety guidelines"): describe a small, young adult instead.
+- **Key poses as stills, posed by an existing frame (tested 2026-10-19, 72 stills + 24 poses):** for reference
+  art (a training set, a pose sheet), `create_image_pro_flash` at the frame's canvas with one of your drawn
+  attack frames as `style_image` ("copy this character's pose, pixel art style, size, proportions, outline and
+  shading exactly; draw a different character in the same pose") gives a wind-up or strike for any brief in 6
+  gens. Name the weapon plainly in the brief and again at the end ("the weapon is clearly a flanged mace"): 21 of
+  24 kept the still's weapon and person. Misses: a bow guide frame turned a crossbowman's crossbow into a bow (pick
+  a guide frame that holds the same kind of weapon), two poses drew a different person (re-roll), and one
+  strike painted a white slash smear across the blade (the guide's motion trail; reject or scrub it). A second
+  batch with a guide frame that holds the same kind of weapon, plus "never a <the guide's other weapon>" at the end,
+  kept 106 of 108 (crossbows, flails, hammers, halberds all held); the misses were again one smear and one face swap.
 - **Wind-up (telegraph) for a monster** (2026-10-16): `animate_image` padded still -> the attack's pose A,
   `frame_count` 4 (4 gens), *"slowly gathers itself and draws back into the wind-up, ready to strike"*; the
   last frame IS pose A, so the engine can hold it until the blow lands. Watch for a duplicated prop on one
@@ -433,7 +443,59 @@ Fire the impact (damage numbers, hit flash, VFX, projectile release) on the hit 
   (*"the raised knee stays up, then the lower leg unfolds and snaps out; the foot never goes back to the
   ground"*) was clean. Shorter clips for a two-pose snap, pin "never goes back". Then `ground_snap.py`
   (needs `x,y` pad offset as one argument) and `colormatch.py`.
+- **A whole body around one existing still** (2026-10-19, 4 bodies, ~$1.30 on credits): pad the still onto each
+  action's canvas, then `edit_image_pro_flash` key poses (attack A/B, skill A/B, a recoil and a dead pose, each
+  naming the weapon and "never a <the weapon it tends to become>"), then `animate_image`: attack and skill A -> B
+  (`frame_count` 10), hurt body pad -> recoil (4), death body pad -> dead (6), idle still -> still (6, drop the
+  last frame for the loop). `animate_image` returns `frame_count` + 1 frames: frame 0 is the input. Weapons held
+  in every frame (chain whip, lute, war hammer, scythe). Two misses: a recoil pose and one hurt in-between came
+  with a big painted white swoosh, and `scrub.py --keep-main` left it, because the key frames already hold white
+  (armour glints, a shirt). Clear near-white blobs of 30+ px, then keep the largest component; small glints stay.
+  One dead pose failed and was refunded; resubmitting it worked.
+  An unarmed body (a robed monk, 2026-10-20, 1 still + 6 poses + 5 clips = $0.37 + 6 daily generations): name
+  the hands, not a weapon, in the hurt and dead prompts (*"arms flung out"*, *"arms limp"*); *"still gripped in
+  his hands"* / *"dropped beside him"* only make sense with a weapon. Its hurt in-between painted a white swoosh
+  whose dark outline was joined to the head, so "keep the largest component" kept the outline: after clearing
+  the white blob, also clear low-saturation pixels within ~4 px of it (skin and cloth are saturated, the line isn't).
 - **Walk**: prompt-only, 8 frames, `last_frame = first frame` for a clean loop, often from a 64 px copy.
 - Props mutate between frames → add *"keeps holding the same <prop> in the same hand, unchanged in
   shape and size"*. Brightness flicker on glows → *"keep exactly the same colour and brightness in
   every frame"* + seed 7.
+
+## Consistency lessons from a local SDXL body pipeline (tested 2026-10-20, 6 heroes, ~40 frames each)
+Learned redrawing existing pixel animations as new heroes with a local model; most of it carries over to
+PixelLab edits (pose edits, re-styles, colour variants of an animation you already have).
+- **A light redraw over a good animation beats a fresh one.** Redrawing each frame of a steady animation at
+  ~0.3 kept the outfit, weapon and timing; 0.75 drew a new design per frame (hat, cape, weapon changed);
+  0.15-0.25 went flat and washed out. One seed for every frame. For PixelLab: start from the frames of an
+  animation that already moves well and change as little as the edit needs.
+- **Recolour by position, keep the lightness order.** To turn an animation into another character's colours,
+  map each source colour to what the new still has at the same spot (both stills in the same pose), not to
+  the colour at the same brightness rank: rank alone turned a brown lute the bard's green (same brightness
+  as her doublet). Take only hue and saturation from that map and the lightness from the rank: the median
+  colour under each source colour flattened light and dark (dull, grey skin) and the redraw stayed soft.
+  `scripts/recolor_like.py` does this.
+- **Thin parts come from the source.** Blades, staffs, scythes and fingers 1-3 px wide don't survive a
+  redraw (doubled swords, broken scythes, staff tips in specks). Paste the source frame's thin parts (what a
+  5 px opening removes from its silhouette) back over the redraw, aligned by silhouette, and drop drawn
+  pixels just around them that the source doesn't have: `recolor_like.py --keep-thin <redrawn dir>`.
+- **Held frames once.** Idles often repeat one picture (one source had 6 identical idle frames; others end
+  on a copy of frame 1). Redrawing each copy separately made the idle flicker and the loop jump. Draw a
+  repeated frame once and reuse it (`recolor_like.py` prints the repeats).
+- **"Random white dots" are background.** The flat background colour caught in gaps (between hat and weapon,
+  cape tatters, under an arm) survives a border flood-fill key, then snaps to the palette's lightest colour.
+  Key enclosed flat background patches too, and fill leftover background-coloured pixels from their
+  neighbours. A segmentation model (isnet-anime, Apache-2.0) finds the real outline but returned an empty
+  mask for hooded skeletons and some fallen frames: compare its area with the colour key's and fall back
+  below ~80%.
+- **Downscale by vote, not average.** Snapping a 4x image to the game grid by averaging each cell made
+  in-between shades that matched odd palette colours (salt-and-pepper noise). Map every big pixel to the
+  palette first (match in OKLab), then let each cell take its most common colour.
+- **What did not help:** pulling the still into every frame with reference attention (blotches); whole-move
+  video redraws (AnimateDiff: smoothest motion but softer, end frames speckle unless the clip is padded with
+  repeats; Wan 2.1 lost the palette); four frames drawn as one 2x2 picture (blotchier); PixelOE's contrast
+  downscale (keeps each cell's brightest pixel: more white blotches); retraining a per-hero LoRA on its own
+  action frames (it copied their faults). A per-hero identity LoRA at 0.5 (7 images of the still, unique
+  token, 400 steps) did hold hat, hair and colours better than none.
+- **Judge with numbers and eyes.** A face score (DINOv2 features of the head crop vs the still) catches big
+  drops (a video model 0.66 vs 0.84) but can't rank close variants: always look at head crops and a GIF.

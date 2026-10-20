@@ -74,5 +74,8 @@ The official 10-25 matches the newer prices; the older 40 for large scenes no lo
 
 When the plan's generations are used up, jobs bill to credits automatically. Measured: 144 generations
 (24 Pro Flash 96×200 stills) cost $0.78, about **$0.0054 per generation**, so a 6-generation still is about $0.03.
+A second batch of 96 (72 stills at 96×200, 24 poses up to 240×256) cost $3.08: canvases up to 256 px stay at ~$0.032.
 Check `get_balance` before and after a batch; the 20-jobs-at-once cap still applies (resubmit the rejected ones
 when slots free up).
+On credits (2026-10-19): `edit_image_pro_flash` key poses on 192x200-256 canvases cost ~$0.037 each (22 jobs,
+$0.83); `animate_image` clips ~$0.03 each (15 clips of 4-10 frames, $0.45, 2-8 generations a clip).

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.4.3 - 2026-10-20
+
+### What we learned
+- Consistency when redrawing an existing animation as a new character (references/animation.md "Consistency
+  lessons"): a light redraw (~0.3) of a steady animation with one seed holds outfit and weapon; recolour by
+  position with the lightness order kept (rank alone turned a brown lute green); paste thin parts (blades,
+  staffs, fingers) back from the source; draw repeated (held) frames once; background caught in gaps is the
+  "random white dots"; downscale 4x art by palette vote, not averaging. What didn't help is listed there too.
+
+### New
+- `scripts/recolor_like.py`: an animation in another character's colours, `--keep-thin` repair of a redraw,
+  repeated-frame report.
+
 ## 1.4.2 - 2026-10-19
 
 ### What we learned

@@ -209,6 +209,7 @@ Timing spec, layer vocabulary and pitfalls: **[references/vfx.md](references/vfx
 | `apply_palette.py <palette> <files>` | snaps generated art to a palette or N colours (enforces colour rules, free) |
 | `ground_snap.py <sprite> <pad> <frames…>` | puts every frame's feet back on the standing sprite's ground line |
 | `colormatch.py <sprite> <frames…>` | fixes colour shift: matches each frame's brightness to the standing sprite and snaps to its colours (free) |
+| `recolor_like.py <old still> <new still> <frames…> --out DIR` | an animation in another character's colours (hue by position, contrast kept); `--keep-thin <redrawn>` pastes thin parts (blades, staffs) back over a redraw; flags repeated frames (free) |
 | `recolor_trail.py` / `slash_layer.py` | turn generator streaks into an effect colour / lift a crescent slash onto another swing |
 | `normal_map.py gif\|split\|preview` | packs frames into the GIF `create_normal_map` reads, cuts the returned strip into `<frame>_n.png`, lights the result from 3 sides to check it |
 | `tileset_preview.py <map.png> <sheets…>` | paints a random test map from top-down tilesets (a chain in order) to check seams |
